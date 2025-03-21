@@ -7,6 +7,7 @@
     <meta name="application-name" content="app.viabenefits.com" />
 
     <meta name="bdaim:custom-error-page-id" content="participant-403" />
+    <meta name="bdaim:version" content="v1.0.0" />
     <meta
       name="bdaim:custom-error-gateway-tracking-ref"
       content="{{azure-ref}}"
@@ -15,6 +16,7 @@
     <title>Via Benefits - 403 Unavailable</title>
 
     <!-- Cannot have more than 32768 characters -->
+    <!-- Keep assets referencing the CDN path, not a FrontDoor path so they are not blocked -->
     <!-- Test with URL https://app.viabenefits.com/?q=%3Cscript%3Ealert(%27XSS%27)%3C/script%3E -->
 
     <!-- Track Data -->
