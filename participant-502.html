@@ -113,19 +113,19 @@
     });
   </script>
 
-  <link rel="stylesheet" href="https://app.viabenefits.com/static/cdn/es-assets/source-sans-pro.css" />
-  <link rel="stylesheet" href="https://app.viabenefits.com/static/cdn/es-assets/icons.css">
-  <link rel="shortcut icon" href="https://app.viabenefits.com/static/cdn/es-assets/images/favicon.ico" />
+  <link rel="stylesheet" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/source-sans-pro.css" />
+  <link rel="stylesheet" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/icons.css">
+  <link rel="shortcut icon" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/favicon.ico" />
 
-  <link rel="preload" href="https://app.viabenefits.com/static/cdn/es-assets/images/via-benefits-logo.png" as="image" />
-  <link rel="preload" href="https://app.viabenefits.com/static/cdn/es-assets/images/backgrounds/3.jpg" as="image" />
+  <link rel="preload" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png" as="image" />
+  <link rel="preload" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/backgrounds/3.jpg" as="image" />
 
   <link rel="preconnect" href="https://www.viabenefits.com/" />
   <link rel="preconnect" href="/about/contact/" />
 
   <style type="text/css">
     body {
-      background: url(https://app.viabenefits.com/static/cdn/es-assets/images/backgrounds/3.jpg);
+      background: url(https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/backgrounds/3.jpg);
       background-attachment: fixed;
       background-color: #d9e7dc;
       background-position: center bottom;
@@ -390,7 +390,7 @@
       font-size: 13px;
       font-weight: 400;
       line-height: 13px;
-      cursor: pointer;
+      cursor: copy;
       transition: all;
       caret-color: rgb(249, 236, 217);
       color-scheme: dark;
@@ -664,7 +664,7 @@
       <div class="dOFsBi">
         <div class="logo">
           <a href="/" aria-label="Via Benefits homepage" class="kiVfhQ">
-            <img src="https://app.viabenefits.com/static/cdn/es-assets/images/via-benefits-logo.png"
+            <img src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png"
               alt="Via Benefits logo" />
           </a>
         </div>
@@ -681,7 +681,7 @@
           <div class="fZxPXu">
             <div class="kWdWjz">
               <img
-                src="https://app.viabenefits.com/static/cdn/es-assets/images/full-color-icons/error-cloud.svg"
+                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
                 class="gtZfrz dHjbSE" />
             </div>
             <div class="gsvxjx">
@@ -705,18 +705,16 @@
                 <small>
                   <details>
                     <summary>Additional Diagnostic Details</summary>
-                    Include these details when attempting to resolve the issue with support.
+                    Please provide these details when contacting support to resolve the issue.
                     <div style="margin-top: 10px; font-size: small">
                       <em>
-                        Copy all details to the clipboard by clicking
-                        <i class="bds-icon bds-copy" aria-hidden="true" title="Copy to clipboard"
-                          onClick="copyToClipboard(getDiagnosticsAsText())"></i>
+                        <a href="#" onClick="copyToClipboard(getDiagnosticsAsText())" style="cursor: copy">Click here</a> to copy all details to the clipboard
+                        <i class="bds-icon bds-copy copy-icon" aria-hidden="true" title="Copy to clipboard"
+                           onClick="copyToClipboard(getDiagnosticsAsText())"></i>
                       </em>
                       <ul class="diagnostic-container" id="diagnostics-list">
-                        <li class="diagnostic-label">Experience Recording Link:</li>
+                        <li class="diagnostic-label">Recording Link:</li>
                         <li id="fullStoryLink" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Experience Session ID:</li>
-                        <li id="fullStorySessionId" class="diagnostic-value"></li>
                         <li class="diagnostic-label">URL:</li>
                         <li id="url" class="diagnostic-value"></li>
                         <li class="diagnostic-label">Username:</li>
@@ -727,14 +725,12 @@
                         <li id="isAgent" class="diagnostic-value"></li>
                         <li class="diagnostic-label">Campaign:</li>
                         <li id="campaignKeyword" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Diagnostics Session ID:</li>
+                        <li class="diagnostic-label">Session ID:</li>
                         <li id="appInsightsSessionId" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Diagnostics User ID:</li>
+                        <li class="diagnostic-label">Session User ID:</li>
                         <li id="appInsightsUserId" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Timestamp of Occurrence:</li>
+                        <li class="diagnostic-label">Timestamp:</li>
                         <li id="timestamp" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Source Host:</li>
-                        <li id="sourceHost" class="diagnostic-value"></li>
                         <li class="diagnostic-label">Browser:</li>
                         <li id="browser" class="diagnostic-value no-border"></li>
                       </ul>
@@ -824,12 +820,19 @@
 
                 function populateDiagnostics() {
                   const elements = document.querySelectorAll('#diagnostics-list li:nth-child(2n)');
+
+                  const currentDiagnostics = {...diagnostics};
+                  if (currentDiagnostics.fullStoryLink) {
+                    currentDiagnostics.fullStoryLink = `${currentDiagnostics.fullStorySessionId}|${currentDiagnostics.fullStoryLink}`;
+                  }
+
                   for (const element of elements) {
                     const key = element.id;
-                    const value = diagnostics[key];
+                    const value = currentDiagnostics[key];
 
                     if (key.endsWith('Link')) {
-                      element.innerHTML = `<a href="${value}" target="_blank" rel="noopener noreferrer">${value}</a>`;
+                      const [title, url] = value.split('|');
+                      element.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`;
                     }
                     else {
                       element.textContent = value;
@@ -860,7 +863,7 @@
               </script>
             </div>
             <img
-              src="https://app.viabenefits.com/static/cdn/es-assets/images/full-color-icons/error-cloud.svg"
+              src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
               alt="Error in the clouds" class="gtZfrz" />
           </div>
         </div>
