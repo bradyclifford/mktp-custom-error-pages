@@ -494,7 +494,7 @@
       padding-bottom: 25px;
     }
 
-    .iIgDPG>.sc-dwVMhp:not(:last-child) {
+    .iIgDPG >.sc-dwVMhp:not(:last-child) {
       margin-bottom: 25px;
     }
 
@@ -800,7 +800,7 @@
                       <li id="url" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Username:</li>
                       <li id="username" class="diagnostic-value"></li>
-                      <li class="diagnostic-label">Participant Correlation ID:</li>
+                      <li class="diagnostic-label">Participant ID:</li>
                       <li id="participantId" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Is Agent:</li>
                       <li id="isAgent" class="diagnostic-value"></li>
@@ -822,6 +822,7 @@
                 </details>
               </small>
             </div>
+            <p id="critical-diagnostic" style="color: #D0D4D8; font-size: 0.8em;" style="display: none"></p>
             <script>
               function getEnvironmentFromHost() {
                 const segments = window.location.hostname.toLowerCase().split('.');
@@ -873,27 +874,32 @@
               function updateDiagnostics({ fullStoryLink, fullStorySessionId } = {}) {
                 const userContext = getContext('userContext');
                 let username = sessionStorage.getItem('userName');
-                if (username === 'undefined') { username = undefined; }
+                if (username === 'undefined' || username === '""') { username = undefined; }
+                username = username?.replace(/"/g, '');
 
                 const isAppInsightsLoaded = window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context;
 
                 let appInsightsAuthenticationId = (isAppInsightsLoaded && appInsights.context.user.authenticatedId) || undefined;
                 let participantId = (userContext && userContext.availability && userContext.availability.participantId) || undefined;
                 if (appInsightsAuthenticationId && !participantId) {
-                  const split = appInsightsAuthenticationId.split('/');
-                  if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
-                    participantId = split[1].trim();
+                  try {
+                    const split = appInsightsAuthenticationId.split('/');
+                    if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
+                      participantId = split[1].trim();
+                    }
+                  } catch (e) {
+                    console.warn('Error parsing AppInsights AuthenticationId', e);
                   }
                 }
 
                 diagnostics = {
                   ...diagnostics,
-                  fullStoryLink: fullStoryLink || diagnostics.fullStoryLink,
+                  fullStoryLink: fullStoryLink || diagnostics.fullStoryLink || getCookie('fs_uid'),
                   fullStorySessionId: fullStorySessionId || diagnostics.fullStorySessionId,
                   url: window.location.href,
                   username,
                   participantId,
-                  isAgent: (userContext && usercontext.availability && usercontext.availability.isAgent) || undefined,
+                  isAgent: (userContext && userContext.availability && userContext.availability.isAgent) || undefined,
                   campaignKeyword: getCookie(`currentCampaign${(getNormalizedEnvironmentFromHost() ? '_' + getNormalizedEnvironmentFromHost() : undefined)}`),
                   appInsightsTraceId: isAppInsightsLoaded ? appInsights.getTraceCtx().getTraceId() : undefined,
                   appInsightsSessionId: isAppInsightsLoaded ? appInsights.context.getSessionId() : getCookie('ai_session'),
@@ -945,16 +951,27 @@
                 diagnosticsElement.style.display = 'block';
               }
 
+              function populateCriticalDiagnostic() {
+                const element = document.getElementById('critical-diagnostic');
+                const criticalValue = diagnostics.fullStorySessionId || diagnostics.appInsightsTraceId || diagnostics.appInsightsSessionId || window.location.href
+                element.innerText = criticalValue;
+
+                const display = criticalValue ? 'block' : 'none';
+                element.style.display = display;
+              }
+
               window.addEventListener("fullStoryReady", function (e) {
                 const { sessionUrlAtTime: fullStoryLink, sessionId: fullStorySessionId } = e.detail;
 
                 updateDiagnostics({ fullStoryLink, fullStorySessionId });
                 populateDiagnostics();
+                populateCriticalDiagnostic();
               });
 
               try {
                 updateDiagnostics();
                 populateDiagnostics();
+                populateCriticalDiagnostic();
               } catch (error) {
                 console.error('Error populating diagnostics:', error);
               }

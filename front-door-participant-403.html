@@ -7,18 +7,18 @@
   <meta name="application-name" content="app.viabenefits.com" />
 
     <meta name="bdaim:custom-error-page-id" content="participant-403-waf" />
-    <meta name="bdaim:version" content="v1.0.0" />
+  <meta name="bdaim:version" content="v1.0.0" />
     <meta
       name="bdaim:custom-error-gateway-tracking-ref"
       content="{{azure-ref}}"
     />
 
-    <title>Via Benefits - 403 Unavailable</title>
+  <title>Via Benefits - 403 Unavailable</title>
 
-    <!-- Cannot have more than 32768 characters in the HTML file. Use to minify https://www.toptal.com/developers/html-minifier  -->
-    <!-- Keep assets referencing the CDN path, not a FrontDoor path so they are not blocked -->
-    <!-- When generating the minified HTML, ensure all ${ are escaped with $${ or the 'templatefile' expression in terraform will fail. Do not escape: ${appInsightsConnectionString} -->
-    <!-- Test with URL https://app.viabenefits.com/?q=%3Cscript%3Ealert(%27XSS%27)%3C/script%3E -->
+  <!-- Cannot have more than 32768 characters in the HTML file. Use to minify https://www.toptal.com/developers/html-minifier  -->
+  <!-- Keep assets referencing the CDN path, not a FrontDoor path so they are not blocked -->
+  <!-- When generating the minified HTML, ensure all ${ are escaped with $${ or the 'templatefile' expression in terraform will fail. Do not escape: ${appInsightsConnectionString} -->
+  <!-- Test with URL https://app.viabenefits.com/?q=%3Cscript%3Ealert(%27XSS%27)%3C/script%3E -->
 
   <!-- Track Data -->
   <script type="text/javascript">
@@ -39,7 +39,7 @@
           host: window.location.host,
           path: window.location.pathname,
           gatewayTrackingRef: '{{azure-ref}}'
-        });        
+        });
 
         // Add to ContextualData object
         data.fullStorySessionUrl = e.detail.sessionUrlAtTime;
@@ -771,23 +771,23 @@
         <div class="fZxPXu">
           <div class="kWdWjz">
             <img
-                  src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg"
+                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg"
                   class="gtZfrz dHjbSE"
                 />
           </div>
           <div class="gsvxjx">
-                <h1 class="bPdQbX">This Site Is Blocked</h1>
+              <h1 class="bPdQbX">This Site Is Blocked</h1>
             <p>
-                  The site you're trying to reach is blocked due to security
-                  concerns with your web browser's history. You can clear your
-                  browser's
+                The site you're trying to reach is blocked due to security
+                concerns with your web browser's history. You can clear your
+                browser's
                   <a
                     href="https://support.google.com/accounts/answer/32050"
                     target="_blank"
                     rel="noopener noreferrer"
                     >cache and third-party cookies</a
                   >, then
-                  <a onClick="window.location.reload()" href="#">try again</a>.
+                <a onClick="window.location.reload()" href="#">try again</a>.
                   <em
                     >Note: browser extension add-ons can produce these security
                     concerns.</em
@@ -824,7 +824,7 @@
                       <li id="url" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Username:</li>
                       <li id="username" class="diagnostic-value"></li>
-                      <li class="diagnostic-label">Participant Correlation ID:</li>
+                      <li class="diagnostic-label">Participant ID:</li>
                       <li id="participantId" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Is Agent:</li>
                       <li id="isAgent" class="diagnostic-value"></li>
@@ -848,6 +848,9 @@
                 </details>
               </small>
             </div>
+            <p>
+              <small style="color: #D0D4D8; font-size: 0.8em;">{{azure-ref}}</small>
+            </p>
             <script>
               function getEnvironmentFromHost() {
                 const segments = window.location.hostname.toLowerCase().split('.');
@@ -899,27 +902,31 @@
               function updateDiagnostics({ fullStoryLink, fullStorySessionId } = {}) {
                 const userContext = getContext('userContext');
                 let username = sessionStorage.getItem('userName');
-                if (username === 'undefined') { username = undefined; }
+                if (username === 'undefined' || username === '""') { username = undefined; }
 
                 const isAppInsightsLoaded = window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context;
 
                 let appInsightsAuthenticationId = (isAppInsightsLoaded && appInsights.context.user.authenticatedId) || undefined;
                 let participantId = (userContext && userContext.availability && userContext.availability.participantId) || undefined;
                 if (appInsightsAuthenticationId && !participantId) {
-                  const split = appInsightsAuthenticationId.split('/');
-                  if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
-                    participantId = split[1].trim();
+                  try {
+                    const split = appInsightsAuthenticationId.split('/');
+                    if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
+                      participantId = split[1].trim();
+                    }
+                  } catch (e) {
+                    console.warn('Error parsing AppInsights AuthenticationId', e);
                   }
                 }
 
                 diagnostics = {
                   ...diagnostics,
                   fullStoryLink: fullStoryLink || diagnostics.fullStoryLink,
-                  fullStorySessionId: fullStorySessionId || diagnostics.fullStorySessionId,
+                  fullStorySessionId: fullStorySessionId || diagnostics.fullStorySessionId || getCookie('fs_uid'),
                   url: window.location.href,
-                  username,
+                  username: username?.replace(/"/g, ''),
                   participantId,
-                  isAgent: (userContext && usercontext.availability && usercontext.availability.isAgent) || undefined,
+                  isAgent: (userContext && userContext.availability && userContext.availability.isAgent) || undefined,
                   campaignKeyword: getCookie(`currentCampaign${(getNormalizedEnvironmentFromHost() ? '_' + getNormalizedEnvironmentFromHost() : undefined)}`),
                   appInsightsTraceId: isAppInsightsLoaded ? appInsights.getTraceCtx().getTraceId() : undefined,
                   appInsightsSessionId: isAppInsightsLoaded ? appInsights.context.getSessionId() : getCookie('ai_session'),
@@ -988,7 +995,7 @@
             </script>
           </div>
           <img
-                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg"
+              src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg"
                 alt="Warning shield"
                 class="gtZfrz"
               />
