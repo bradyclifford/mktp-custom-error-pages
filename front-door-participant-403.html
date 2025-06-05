@@ -866,7 +866,7 @@
               function getCookie(name) {
                 return document.cookie
                   .split('; ')
-                  .find((cookie) => cookie.startsWith(`$${name}=`))
+                  .find((cookie) => cookie.startsWith(`${name}=`))
                   ?.split('=')[1] ?? null;
               }
 
@@ -920,7 +920,7 @@
                   username,
                   participantId,
                   isAgent: (userContext && usercontext.availability && usercontext.availability.isAgent) || undefined,
-                  campaignKeyword: getCookie(`currentCampaign$${(getNormalizedEnvironmentFromHost() ? '_' + getNormalizedEnvironmentFromHost() : undefined)}`),
+                  campaignKeyword: getCookie(`currentCampaign${(getNormalizedEnvironmentFromHost() ? '_' + getNormalizedEnvironmentFromHost() : undefined)}`),
                   appInsightsTraceId: isAppInsightsLoaded ? appInsights.getTraceCtx().getTraceId() : undefined,
                   appInsightsSessionId: isAppInsightsLoaded ? appInsights.context.getSessionId() : getCookie('ai_session'),
                   appInsightsUserId: isAppInsightsLoaded ? appInsights.context.user.id : getCookie('ai_user'),
@@ -939,7 +939,7 @@
               function getDiagnosticsAsText() {
                 return Object.entries(diagnostics)
                   .filter(([key, value]) => value)
-                  .map(([key, value]) => `$${key}: $${value}`)
+                  .map(([key, value]) => `${key}: ${value}`)
                   .join('\n');
               }
 
@@ -948,7 +948,7 @@
 
                 const currentDiagnostics = {...diagnostics};
                 if (currentDiagnostics.fullStoryLink) {
-                  currentDiagnostics.fullStoryLink = `$${currentDiagnostics.fullStorySessionId}|$${currentDiagnostics.fullStoryLink}`;
+                  currentDiagnostics.fullStoryLink = `${currentDiagnostics.fullStorySessionId}|${currentDiagnostics.fullStoryLink}`;
                 }
 
                 for (const element of elements) {
@@ -957,7 +957,7 @@
 
                   if (key.endsWith('Link')) {
                     const [title, url] = value.split('|');
-                    element.innerHTML = `<a href="$${url}" target="_blank" rel="noopener noreferrer">$${title}</a>`;
+                    element.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`;
                   }
                   else {
                     element.textContent = value;
