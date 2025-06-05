@@ -837,6 +837,8 @@
                       <li id="appInsightsAuthenticationId" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Session User ID:</li>
                       <li id="appInsightsUserId" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Gateway Tracking ID:</li>
+                      <li id="gatewayTrackingReference" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Timestamp:</li>
                       <li id="timestamp" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Browser:</li>
@@ -922,6 +924,7 @@
                   appInsightsSessionId: isAppInsightsLoaded ? appInsights.context.getSessionId() : getCookie('ai_session'),
                   appInsightsUserId: isAppInsightsLoaded ? appInsights.context.user.id : getCookie('ai_user'),
                   appInsightsAuthenticationId,
+                  gatewayTrackingReference: '{{azure-ref}}',
                   timestamp: new Date().toLocaleString('en-US', { timeZoneName: 'short' }),
                   sourceHost: window.location.hostname,
                   browser: navigator.userAgent
