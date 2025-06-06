@@ -39,7 +39,7 @@
 
         var diagnostics = document.getElementById('diagnostics');
         if (diagnostics && e.detail.sessionId) {
-          diagnostics.innerHTML = `<strong>Recorded Session</strong>: <a href="${e.detail.sessionUrlAtTime}" target="_blank" rel="noopener noreferrer">${e.detail.sessionId}</a>`;
+          diagnostics.innerHTML = `<strong>Session</strong>: <a href="${e.detail.sessionUrlAtTime}" target="_blank" rel="noopener noreferrer">${e.detail.sessionId}</a>`;
           diagnostics.style.display = "block";
         }
       })

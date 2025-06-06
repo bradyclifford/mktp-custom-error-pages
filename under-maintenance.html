@@ -691,6 +691,8 @@
             <p>
                   We're currently conducting maintenance on our website. Please wait a few minutes and
                   <a onClick="window.location.reload()" href="#">try again</a>. We apologize for any inconvenience.
+
+                  <span id="critical-diagnostic" style="color: #D0D4D8; font-size: 0.8em;" style="display: none"></span>
             </p>
             <p>
                 If this issue continues, you can contact
@@ -740,7 +742,6 @@
                 </details>
               </small>
             </div>
-            <p id="critical-diagnostic" style="color: #D0D4D8; font-size: 0.8em;" style="display: none"></p>
             <script>
               function getEnvironmentFromHost() {
                 const segments = window.location.hostname.toLowerCase().split('.');

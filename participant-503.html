@@ -772,6 +772,8 @@
                 Please wait a few moments, then
                 <a onClick="window.location.reload()" href="#">refresh</a> the
                 page to try again.
+
+                <span id="critical-diagnostic" style="color: #D0D4D8; font-size: 0.8em;" style="display: none"></span>
             </p>
             <p>
               If this issue continues or you need more information, you can
@@ -822,7 +824,6 @@
                 </details>
               </small>
             </div>
-            <p id="critical-diagnostic" style="color: #D0D4D8; font-size: 0.8em;" style="display: none"></p>
             <script>
               function getEnvironmentFromHost() {
                 const segments = window.location.hostname.toLowerCase().split('.');
