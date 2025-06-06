@@ -873,7 +873,7 @@
               function populateCriticalDiagnostic() {
                 const element = document.getElementById('critical-diagnostic');
                 const criticalValue = diagnostics.fullStorySessionId || diagnostics.appInsightsTraceId || diagnostics.appInsightsSessionId || window.location.href
-                element.innerText = criticalValue;
+                element.innerText = criticalValue?.toString().slice(0, 130);
 
                 const display = criticalValue ? 'block' : 'none';
                 element.style.display = display;
