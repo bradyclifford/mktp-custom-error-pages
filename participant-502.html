@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="bdaim:custom-error-page-id" content="participant-502" />
+  <meta name="bdaim:version" content="v1.0.0" />
+    
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width" />
   <meta name="application-name" content="app.viabenefits.com" />
 
-  <meta name="bdaim:custom-error-page-id" content="participant-503" />
-  <meta name="bdaim:version" content="v1.0.0" />
-
-  <title>Via Benefits - 503 Unavailable</title>
+  <title>Via Benefits - Unavailable</title>
 
   <!-- Keep assets referencing the CDN path, not a FrontDoor path so they are not blocked -->
 
   <!-- Track Data -->
   <script type="text/javascript">
     (function () {
-      var scope = "Maintenance/Participant";
-      var eventName = scope + "/503 Custom Error Page Shown";
+      const scope = "Maintenance/Participant";
+      const eventName = scope + "/502 Custom Error Page Shown";
 
       window.contextualData = {};
       const data = window.contextualData;
@@ -183,7 +183,7 @@
   <link rel="preload" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png" as="image" />
   <link rel="preload" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/backgrounds/3.jpg" as="image" />
 
-  <link rel="preconnect" href="https://www.viabenefits.com/" />
+  <link rel="preconnect" href="https://viabenefits.com/" />
   <link rel="preconnect" href="/about/contact/" />
 
   <style type="text/css">
@@ -494,7 +494,7 @@
       padding-bottom: 25px;
     }
 
-    .iIgDPG>.sc-dwVMhp:not(:last-child) {
+    .iIgDPG >.sc-dwVMhp:not(:last-child) {
       margin-bottom: 25px;
     }
 
@@ -772,6 +772,8 @@
                 Please wait a few moments, then
                 <a onClick="window.location.reload()" href="#">refresh</a> the
                 page to try again.
+
+                <span id="critical-diagnostic" style="color: #D0D4D8; font-size: 0.8em; display: none;"></span>
             </p>
             <p>
               If this issue continues or you need more information, you can
@@ -800,7 +802,7 @@
                       <li id="url" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Username:</li>
                       <li id="username" class="diagnostic-value"></li>
-                      <li class="diagnostic-label">Participant Correlation ID:</li>
+                      <li class="diagnostic-label">Participant ID:</li>
                       <li id="participantId" class="diagnostic-value"></li>
                       <li class="diagnostic-label">Is Agent:</li>
                       <li id="isAgent" class="diagnostic-value"></li>
@@ -873,27 +875,32 @@
               function updateDiagnostics({ fullStoryLink, fullStorySessionId } = {}) {
                 const userContext = getContext('userContext');
                 let username = sessionStorage.getItem('userName');
-                if (username === 'undefined') { username = undefined; }
+                if (username === 'undefined' || username === '""') { username = undefined; }
+                username = username?.replace(/"/g, '');
 
                 const isAppInsightsLoaded = window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context;
 
                 let appInsightsAuthenticationId = (isAppInsightsLoaded && appInsights.context.user.authenticatedId) || undefined;
                 let participantId = (userContext && userContext.availability && userContext.availability.participantId) || undefined;
                 if (appInsightsAuthenticationId && !participantId) {
-                  const split = appInsightsAuthenticationId.split('/');
-                  if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
-                    participantId = split[1].trim();
+                  try {
+                    const split = appInsightsAuthenticationId.split('/');
+                    if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
+                      participantId = split[1].trim();
+                    }
+                  } catch (e) {
+                    console.warn('Error parsing AppInsights AuthenticationId', e);
                   }
                 }
 
                 diagnostics = {
                   ...diagnostics,
-                  fullStoryLink: fullStoryLink || diagnostics.fullStoryLink,
+                  fullStoryLink: fullStoryLink || diagnostics.fullStoryLink || getCookie('fs_uid'),
                   fullStorySessionId: fullStorySessionId || diagnostics.fullStorySessionId,
                   url: window.location.href,
                   username,
                   participantId,
-                  isAgent: (userContext && usercontext.availability && usercontext.availability.isAgent) || undefined,
+                  isAgent: (userContext && userContext.availability && userContext.availability.isAgent) || undefined,
                   campaignKeyword: getCookie(`currentCampaign${(getNormalizedEnvironmentFromHost() ? '_' + getNormalizedEnvironmentFromHost() : undefined)}`),
                   appInsightsTraceId: isAppInsightsLoaded ? appInsights.getTraceCtx().getTraceId() : undefined,
                   appInsightsSessionId: isAppInsightsLoaded ? appInsights.context.getSessionId() : getCookie('ai_session'),
@@ -945,16 +952,27 @@
                 diagnosticsElement.style.display = 'block';
               }
 
+              function populateCriticalDiagnostic() {
+                const element = document.getElementById('critical-diagnostic');
+                const criticalValue = diagnostics.fullStorySessionId || diagnostics.appInsightsTraceId || diagnostics.appInsightsSessionId || window.location.href
+                element.innerText = criticalValue?.toString().slice(0, 130);
+
+                const display = criticalValue ? 'block' : 'none';
+                element.style.display = display;
+              }
+
               window.addEventListener("fullStoryReady", function (e) {
                 const { sessionUrlAtTime: fullStoryLink, sessionId: fullStorySessionId } = e.detail;
 
                 updateDiagnostics({ fullStoryLink, fullStorySessionId });
                 populateDiagnostics();
+                populateCriticalDiagnostic();
               });
 
               try {
                 updateDiagnostics();
                 populateDiagnostics();
+                populateCriticalDiagnostic();
               } catch (error) {
                 console.error('Error populating diagnostics:', error);
               }
