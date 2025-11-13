@@ -20,17 +20,18 @@
       var eventName = scope + "/503 Custom Error Page Shown";
 
       window.contextualData = {};
-      var data = window.contextualData;
+      const data = window.contextualData;
 
       window.addEventListener('fullStoryReady', function (e) {
-        var instance = e.detail.instance;
+        console.info('Adding FullStory telemetry...');
 
+        const instance = e.detail.instance;
         instance.event(eventName, {
           statusCode: 503,
           url: window.location.href,
           host: window.location.host,
           path: window.location.pathname,
-        });
+        });        
 
         instance.setVars('page', {
           scope: scope,
@@ -40,25 +41,48 @@
           path: window.location.pathname,
         });
 
+        // Add to ContextualData object
         data.fullStorySessionUrl = e.detail.sessionUrlAtTime;
         data.fullStorySession = e.detail.sessionId;
 
-        if (appInsights && appInsights.context) {
-          instance.setVars('page', {
-            aiUserId: appInsights.context.user.id,
-            aiSessionId: appInsights.context.getSessionId(),
-            aiOperationId: appInsights.getTraceCtx().getTraceId(),
-          });
+        if (window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context) {
+          console.info('Adding AppInsight telemetry to FullStory...');
 
           appInsights.addTelemetryInitializer(function (envelope) {
             envelope.data.fullStorySessionUrl = e.detail.sessionUrlAtTime;
             envelope.data.fullStorySession = e.detail.sessionId;
           });
+
+          instance.setVars('page', {
+            aiUserId: (appInsights.context.user && appInsights.context.user.id) || undefined,
+            aiSessionId: appInsights.context.getSessionId(),
+            aiOperationId: appInsights.getTraceCtx().getTraceId(),
+            traceId: appInsights.getTraceCtx().getTraceId()
+          });
+
+          const fullStoryUid = (appInsights.context.user && appInsights.context.user.authenticatedId) || undefined;
+          if (fullStoryUid) {
+            const split = fullStoryUid.split('/');
+            const userVars = {};
+
+            if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
+              userVars.participantId = split[1].trim();
+            }
+            else if (split.length > 1 && split[0].trim().toLowerCase() === 'employee') {
+              userVars.employeeId = split[1].trim();
+            }
+            else if (split.length > 1 && split[0].trim().toLowerCase() === 'client') {
+              userVars.clientId = split[1].trim();
+            }
+
+            instance.identify(fullStoryUid, userVars);
+          }
         }
       });
 
       window.addEventListener('appInsightsReady', function (e) {
-        var instance = e.detail.instance;
+        console.info('Adding AppInsights telemetry...');
+        const instance = e.detail.instance;
 
         instance.addTelemetryInitializer(function (envelope) {
           if (!envelope.data) envelope.data = {};
@@ -67,53 +91,89 @@
 
         instance.trackEvent({ name: eventName });
 
+        // Add to ContextualData object
         data.traceId = instance.getTraceCtx().getTraceId();
       });
 
-      window.addEventListener("comm100Ready", function (e) {
-        var instance = e.detail.instance;
+      window.addEventListener('googleTagReady', function (e) {
+        const instance = e.detail.instance;
+        
+        if (window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context) {
+          console.info('Adding AppInsights telemetry to Google Tag...');
 
-        instance.set('livechat.customVariables', [
-          { name: 'scope', value: eventName },
-          { name: 'fullStorySessionUrl', value: e.detail.sessionUrlAtTime },
-          { name: 'fullStorySession', value: e.detail.sessionId },
-          {
-            name: 'traceId',
-            value:
-              appInsights.getTraceCtx() &&
-              appInsights.getTraceCtx().getTraceId()
-          },
-        ]);
+          instance('set', { traceId: appInsights.getTraceCtx().getTraceId() });
+          instance('set', { aiOperationId: appInsights.getTraceCtx().getTraceId() });
+
+          if (instance.context) {
+            instance('set', { aiUserId: (appInsights.context.user && appInsights.context.user.id) || undefined });
+            instance('set', { aiSessionId: appInsights.context.getSessionId() });
+          }
+        }
+      });
+
+      window.addEventListener('comm100Ready', function (e) {
+        const instance = e.detail.instance;
+
+        if (window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context) {
+          console.info('Adding AppInsights and FullStory telemetry to Comm100...');
+          
+          instance.set('livechat.customVariables', [
+            { name: 'scope', value: eventName },
+            { name: 'fullStorySessionUrl', value: e.detail.sessionUrlAtTime },
+            { name: 'fullStorySession', value: e.detail.sessionId },
+            {
+              name: 'traceId',
+              value: appInsights.getTraceCtx() && appInsights.getTraceCtx().getTraceId()
+            },
+          ]);
+        }
       });
     })();
   </script>
 
   <!-- AppInsights - must be first before others -->
   <script type="text/javascript">
-    !(function (T, l, y) { var S = T.location, k = "script", D = "connectionString", C = "ingestionendpoint", I = "disableExceptionTracking", E = "ai.device.", b = "toLowerCase", w = "crossOrigin", N = "POST", e = "appInsightsSDK", t = y.name || "appInsights"; (y.name || T[e]) && (T[e] = t); var n = T[t] || (function (d) { var g = !1, f = !1, m = { initialize: !0, queue: [], sv: "5", version: 2, config: d }; function v(e, t) { var n = {}, a = "Browser"; return ((n[E + "id"] = a[b]()), (n[E + "type"] = a), (n["ai.operation.name"] = (S && S.pathname) || "_unknown_"), (n["ai.internal.sdkVersion"] = "javascript:snippet_" + (m.sv || m.version)), { time: (function () { var e = new Date(); function t(e) { var t = "" + e; return 1 === t.length && (t = "0" + t), t; } return (e.getUTCFullYear() + "-" + t(1 + e.getUTCMonth()) + "-" + t(e.getUTCDate()) + "T" + t(e.getUTCHours()) + ":" + t(e.getUTCMinutes()) + ":" + t(e.getUTCSeconds()) + "." + ((e.getUTCMilliseconds() / 1e3).toFixed(3) + "").slice(2, 5) + "Z"); })(), name: "Microsoft.ApplicationInsights." + e.replace(/-/g, "") + "." + t, sampleRate: 100, tags: n, data: { baseData: { ver: 2 } }, }); } var h = d.url || y.src; if (h) { function a(e) { var t, n, a, i, r, o, s, c, u, p, l; (g = !0), (m.queue = []), f || ((f = !0), (t = h), (s = (function () { var e = {}, t = d.connectionString; if (t) for (var n = t.split(";"), a = 0; a < n.length; a++) { var i = n[a].split("="); 2 === i.length && (e[i[0][b]()] = i[1]); } if (!e[C]) { var r = e.endpointsuffix, o = r ? e.location : null; e[C] = "https://" + (o ? o + "." : "") + "dc." + (r || "services.visualstudio.com"); } return e; })()), (c = s[D] || d[D] || ""), (u = s[C]), (p = u ? u + "/v2/track" : d.endpointUrl), (l = []).push(((n = "SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)"), (a = t), (i = p), ((o = (r = v(c, "Exception")).data).baseType = "ExceptionData"), (o.baseData.exceptions = [{ typeName: "SDKLoadFailed", message: n.replace(/\./g, "-"), hasFullStack: !1, stack: n + "\nSnippet failed to load [" + a + "] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: " + ((S && S.pathname) || "_unknown_") + "\nEndpoint: " + i, parsedStack: [], },]), r)), l.push((function (e, t, n, a) { var i = v(c, "Message"), r = i.data; r.baseType = "MessageData"; var o = r.baseData; return ((o.message = 'AI (Internal): 99 message:"' + ("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) (" + n + ")").replace(/\"/g, "") + '"'), (o.properties = { endpoint: a }), i); })(0, 0, t, p)), (function (e, t) { if (JSON) { var n = T.fetch; if (n && !y.useXhr) n(t, { method: N, body: JSON.stringify(e), mode: "cors", }); else if (XMLHttpRequest) { var a = new XMLHttpRequest(); a.open(N, t), a.setRequestHeader("Content-type", "application/json"), a.send(JSON.stringify(e)); } } })(l, p)); } function i(e, t) { f || setTimeout(function () { (!t && m.core) || a(); }, 500); } var e = (function () { var n = l.createElement(k); n.src = h; var e = y[w]; return ((!e && "" !== e) || "undefined" == n[w] || (n[w] = e), (n.onload = i), (n.onerror = a), (n.onreadystatechange = function (e, t) { ("loaded" !== n.readyState && "complete" !== n.readyState) || i(0, t); }), n); })(); y.ld < 0 ? l.getElementsByTagName("head")[0].appendChild(e) : setTimeout(function () { l.getElementsByTagName(k)[0].parentNode.appendChild(e); }, y.ld || 0); } try { m.cookie = l.cookie; } catch (p) { } function t(e) { for (; e.length;) !(function (t) { m[t] = function () { var e = arguments; g || m.queue.push(function () { m[t].apply(m, e); }); }; })(e.pop()); } var n = "track", r = "TrackPage", o = "TrackEvent"; t([n + "Event", n + "PageView", n + "Exception", n + "Trace", n + "DependencyData", n + "Metric", n + "PageViewPerformance", "start" + r, "stop" + r, "start" + o, "stop" + o, "addTelemetryInitializer", "setAuthenticatedUserContext", "clearAuthenticatedUserContext", "flush",]), (m.SeverityLevel = { Verbose: 0, Information: 1, Warning: 2, Error: 3, Critical: 4, }); var s = (d.extensionConfig || {}).ApplicationInsightsAnalytics || {}; if (!0 !== d[I] && !0 !== s[I]) { var c = "onerror"; t(["_" + c]); var u = T[c]; (T[c] = function (e, t, n, a, i) { var r = u && u(e, t, n, a, i); return (!0 !== r && m["_" + c]({ message: e, url: t, lineNumber: n, columnNumber: a, error: i, }), r); }), (d.autoExceptionInstrumented = !0); } return m; })(y.cfg); function a() { y.onInit && y.onInit(n); } (T[t] = n).queue && 0 === n.queue.length ? (n.queue.push(a), n.trackPageView({})) : a(); })(window, document, {
-      src: 'https://js.monitor.azure.com/scripts/b/ai.2.min.js', // The SDK URL Source
-      ld: -1, // block page load and add to head.
-      crossOrigin: 'anonymous', // When supplied this will add the provided value as the cross origin attribute on the script tag
-      onInit: function () {
-        window.dispatchEvent(
-          new CustomEvent('appInsightsReady', { detail: { instance } })
-        );
-      },
-      cfg: {
-        // Application Insights Configuration
-        connectionString: '', // TODO: get ID from GitHub Configuration during deployment
-        distributedTracingMode: 2, // DistributedTracingModes.W3C
-        disableFetchTracking: false,
-        enableCorsCorrelation: true,
-        enableRequestHeaderTracking: true,
-        enableResponseHeaderTracking: true,
-        autoTrackPageVisitTime: true,
-        enableAutoRouteTracking: true,
-        enableAjaxErrorStatusText: true,
-        correlationHeaderDomains: [window.location.host],
-        cookieDomain: window.location.hostname.split('.').slice(-2).join('.'),
-      },
-    });
+    const appInsightsConnectionString = '#{appInsightsConnectionString}';
+
+    window.__bdaim = window.__bdaim || {};
+    window.__bdaim.isAppInsightsEnabled = false;
+
+    if(!appInsightsConnectionString || /^#{.*}$/gs.test(appInsightsConnectionString)) {
+      (console || {warn: function () {}}).warn('%cAppInsights\n%c Connection string key missing or not substituted [%s] ',
+              'font-weight: bold; font-size: 1.5em; line-height: 2em;',
+              'font-weight: normal', appInsightsConnectionString);
+    }
+    else {
+      window.__bdaim.isAppInsightsEnabled = true;
+
+      !(function (T, l, y) { var S = T.location, k = "script", D = "connectionString", C = "ingestionendpoint", I = "disableExceptionTracking", E = "ai.device.", b = "toLowerCase", w = "crossOrigin", N = "POST", e = "appInsightsSDK", t = y.name || "appInsights"; (y.name || T[e]) && (T[e] = t); var n = T[t] || (function (d) { var g = !1, f = !1, m = { initialize: !0, queue: [], sv: "5", version: 2, config: d }; function v(e, t) { var n = {}, a = "Browser"; return ((n[E + "id"] = a[b]()), (n[E + "type"] = a), (n["ai.operation.name"] = (S && S.pathname) || "_unknown_"), (n["ai.internal.sdkVersion"] = "javascript:snippet_" + (m.sv || m.version)), { time: (function () { var e = new Date(); function t(e) { var t = "" + e; return 1 === t.length && (t = "0" + t), t; } return (e.getUTCFullYear() + "-" + t(1 + e.getUTCMonth()) + "-" + t(e.getUTCDate()) + "T" + t(e.getUTCHours()) + ":" + t(e.getUTCMinutes()) + ":" + t(e.getUTCSeconds()) + "." + ((e.getUTCMilliseconds() / 1e3).toFixed(3) + "").slice(2, 5) + "Z"); })(), name: "Microsoft.ApplicationInsights." + e.replace(/-/g, "") + "." + t, sampleRate: 100, tags: n, data: { baseData: { ver: 2 } }, }); } var h = d.url || y.src; if (h) { function a(e) { var t, n, a, i, r, o, s, c, u, p, l; (g = !0), (m.queue = []), f || ((f = !0), (t = h), (s = (function () { var e = {}, t = d.connectionString; if (t) for (var n = t.split(";"), a = 0; a < n.length; a++) { var i = n[a].split("="); 2 === i.length && (e[i[0][b]()] = i[1]); } if (!e[C]) { var r = e.endpointsuffix, o = r ? e.location : null; e[C] = "https://" + (o ? o + "." : "") + "dc." + (r || "services.visualstudio.com"); } return e; })()), (c = s[D] || d[D] || ""), (u = s[C]), (p = u ? u + "/v2/track" : d.endpointUrl), (l = []).push(((n = "SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)"), (a = t), (i = p), ((o = (r = v(c, "Exception")).data).baseType = "ExceptionData"), (o.baseData.exceptions = [{ typeName: "SDKLoadFailed", message: n.replace(/\./g, "-"), hasFullStack: !1, stack: n + "\nSnippet failed to load [" + a + "] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: " + ((S && S.pathname) || "_unknown_") + "\nEndpoint: " + i, parsedStack: [], },]), r)), l.push((function (e, t, n, a) { var i = v(c, "Message"), r = i.data; r.baseType = "MessageData"; var o = r.baseData; return ((o.message = 'AI (Internal): 99 message:"' + ("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) (" + n + ")").replace(/\"/g, "") + '"'), (o.properties = { endpoint: a }), i); })(0, 0, t, p)), (function (e, t) { if (JSON) { var n = T.fetch; if (n && !y.useXhr) n(t, { method: N, body: JSON.stringify(e), mode: "cors", }); else if (XMLHttpRequest) { var a = new XMLHttpRequest(); a.open(N, t), a.setRequestHeader("Content-type", "application/json"), a.send(JSON.stringify(e)); } } })(l, p)); } function i(e, t) { f || setTimeout(function () { (!t && m.core) || a(); }, 500); } var e = (function () { var n = l.createElement(k); n.src = h; var e = y[w]; return ((!e && "" !== e) || "undefined" == n[w] || (n[w] = e), (n.onload = i), (n.onerror = a), (n.onreadystatechange = function (e, t) { ("loaded" !== n.readyState && "complete" !== n.readyState) || i(0, t); }), n); })(); y.ld < 0 ? l.getElementsByTagName("head")[0].appendChild(e) : setTimeout(function () { l.getElementsByTagName(k)[0].parentNode.appendChild(e); }, y.ld || 0); } try { m.cookie = l.cookie; } catch (p) { } function t(e) { for (; e.length;) !(function (t) { m[t] = function () { var e = arguments; g || m.queue.push(function () { m[t].apply(m, e); }); }; })(e.pop()); } var n = "track", r = "TrackPage", o = "TrackEvent"; t([n + "Event", n + "PageView", n + "Exception", n + "Trace", n + "DependencyData", n + "Metric", n + "PageViewPerformance", "start" + r, "stop" + r, "start" + o, "stop" + o, "addTelemetryInitializer", "setAuthenticatedUserContext", "clearAuthenticatedUserContext", "flush",]), (m.SeverityLevel = { Verbose: 0, Information: 1, Warning: 2, Error: 3, Critical: 4, }); var s = (d.extensionConfig || {}).ApplicationInsightsAnalytics || {}; if (!0 !== d[I] && !0 !== s[I]) { var c = "onerror"; t(["_" + c]); var u = T[c]; (T[c] = function (e, t, n, a, i) { var r = u && u(e, t, n, a, i); return (!0 !== r && m["_" + c]({ message: e, url: t, lineNumber: n, columnNumber: a, error: i, }), r); }), (d.autoExceptionInstrumented = !0); } return m; })(y.cfg); function a() { y.onInit && y.onInit(n); } (T[t] = n).queue && 0 === n.queue.length ? (n.queue.push(a), n.trackPageView({})) : a(); })(window, document, {
+        src: 'https://js.monitor.azure.com/scripts/b/ai.2.min.js', // The SDK URL Source
+        ld: -1, // block page load and add to head.
+        crossOrigin: 'anonymous', // When supplied this will add the provided value as the cross origin attribute on the script tag
+        onInit: function () {
+          console.debug('App Insights SDK initialized');
+
+          window.__bdaim.isAppInsightsLoaded = true;
+
+          window.dispatchEvent(
+            new CustomEvent('appInsightsReady', { detail: { instance: appInsights } })
+          );
+        },
+        cfg: {
+          connectionString: appInsightsConnectionString,
+          distributedTracingMode: 2, // DistributedTracingModes.W3C
+          disableFetchTracking: false,
+          enableCorsCorrelation: true,
+          enableRequestHeaderTracking: true,
+          enableResponseHeaderTracking: true,
+          autoTrackPageVisitTime: true,
+          enableAutoRouteTracking: true,
+          enableAjaxErrorStatusText: true,
+          correlationHeaderDomains: [window.location.host],
+          cookieDomain: window.location.hostname.split('.').slice(-2).join('.'),
+        },
+      });
+    }
   </script>
 
   <link rel="stylesheet" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/source-sans-pro.css" />
@@ -138,8 +198,7 @@
       color: #444;
 
       box-sizing: border-box;
-      font-family: "Source Sans Pro", "Segoe UI", Segoe, Calibri, Tahoma,
-        sans-serif;
+      font-family: 'Source Sans Pro', 'Segoe UI', Segoe, Calibri, Tahoma, sans-serif;
       line-height: 1.428;
       margin: 0;
       min-height: 100%;
@@ -266,7 +325,6 @@
     .fZxPXu {
       padding: 30px;
       padding-top: 25px;
-      padding-bottom: 10px;
       display: flex;
       position: relative;
       flex-direction: column-reverse;
@@ -277,7 +335,6 @@
       .fZxPXu {
         flex-direction: row;
         padding-top: 55px;
-        padding-bottom: 30px;
       }
     }
 
@@ -591,10 +648,12 @@
   </style>
 
   <!-- FullStory -->
-  <script>
+  <script async>
     window['_fs_ready'] = function () {
-      var sessionUrlAtTime, sessionId;
-      var instance = window[window["_fs_namespace"]];
+      console.info('FullStory SDK initialized');
+
+      let sessionUrlAtTime, sessionId;
+      let instance = window[window['_fs_namespace']];
 
       try {
         sessionUrlAtTime = instance.getCurrentSessionURL(true);
@@ -603,11 +662,18 @@
         console.warn('Unable to get FullStory current session data', e);
       }
 
-      window.dispatchEvent(
-        new CustomEvent('fullStoryReady', {
-          detail: { instance, sessionId, sessionUrlAtTime }
-        })
-      );
+      const fullStoryReadyEvent = new CustomEvent('fullStoryReady', {
+        detail: { instance, sessionId, sessionUrlAtTime }
+      });
+
+      if (window.__bdaim && (window.__bdaim.isAppInsightsLoaded || window.__bdaim.isAppInsightsEnabled === false)) {
+        window.dispatchEvent(fullStoryReadyEvent);
+        return;
+      }
+
+      window.addEventListener('appInsightsReady', function () {
+        window.dispatchEvent(fullStoryReadyEvent);
+      });
     };
 
     window['_fs_host'] = 'fullstory.com';
@@ -619,32 +685,37 @@
 
   <!-- Google -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-W9CD68KC59"></script>
-  <script>
+  <script async>
     window.dataLayer = window.dataLayer || [];
     function gtag() {
       dataLayer.push(arguments);
     }
     gtag('js', new Date());
-
-    // TODO: get ID from GitHub Configuration during deployment
     gtag('config', 'G-W9CD68KC59');
 
-    if (appInsights && appInsights.context) {
-      gtag('set', 'aiUserId', appInsights.context.user.id);
-      gtag('set', 'aiSessionId', appInsights.context.getSessionId());
-      gtag('set', 'aiOperationId', appInsights.getTraceCtx().getTraceId());
+    const googleTagReadyEvent = new CustomEvent('googleTagReady', {
+      detail: { instance: gtag }
+    });
+
+    if (window.__bdaim && (window.__bdaim.isAppInsightsLoaded || window.__bdaim.isAppInsightsEnabled === false)) {
+      window.dispatchEvent(googleTagReadyEvent);
+    }
+    else {
+      window.addEventListener('appInsightsReady', function () {
+        window.dispatchEvent(googleTagReadyEvent);
+      });
     }
   </script>
 
   <!-- Qualtrics -->
-  <script type="text/javascript">
+  <script type="text/javascript" async>
     // TODO: get ID from GitHub Configuration during deployment
     (function () { var g = function (e, h, f, g) { this.get = function (a) { for (var a = a + "=", c = document.cookie.split(";"), b = 0, e = c.length; b < e; b++) { for (var d = c[b]; " " == d.charAt(0);) d = d.substring(1, d.length); if (0 == d.indexOf(a)) return d.substring(a.length, d.length); } return null; }; this.set = function (a, c) { var b = "", b = new Date(); b.setTime(b.getTime() + 6048e5); b = "; expires=" + b.toGMTString(); document.cookie = a + "=" + c + b + "; path=/; "; }; this.check = function () { var a = this.get(f); if (a) a = a.split(":"); else if (100 != e) "v" == h && (e = Math.random() >= e / 100 ? 0 : 100), (a = [h, e, 0]), this.set(f, a.join(":")); else return !0; var c = a[1]; if (100 == c) return !0; switch (a[0]) { case "v": return !1; case "r": return ((c = a[2] % Math.floor(100 / c)), a[2]++, this.set(f, a.join(":")), !c); } return !0; }; this.go = function () { if (this.check()) { var a = document.createElement("script"); a.type = "text/javascript"; a.src = g; document.body && document.body.appendChild(a); } }; this.start = function () { var t = this; "complete" !== document.readyState ? window.addEventListener ? window.addEventListener("load", function () { t.go(); }, !1) : window.attachEvent && window.attachEvent("onload", function () { t.go(); }) : t.go(); }; }; try { new g(100, "r", "QSI_S_ZN_0x5xjcuK1qVGfs1", "https://zn0x5xjcuk1qvgfs1-towerswatson.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_0x5xjcuK1qVGfs1").start(); } catch (i) { } })();
   </script>
 
   <!-- Comm100 -->
   <div id="comm100-button-23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65"></div>
-  <script type="text/javascript">
+  <script type="text/javascript" async>
     // TODO: get ID from GitHub Configuration during deployment
     var Comm100API = Comm100API || {};
     (function (t) { function e(e) { var a = document.createElement("script"), c = document.getElementsByTagName("script")[0]; (a.type = "text/javascript"), (a.async = !0), (a.src = e + t.site_id), c.parentNode.insertBefore(a, c); } (t.chat_buttons = t.chat_buttons || []), t.chat_buttons.push({ code_plan: "23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65", div_id: "comm100-button-23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65", }), (t.site_id = 10002849), (t.main_code_plan = "23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65"), e("https://vue.comm100.com/livechat.ashx?siteId="), setTimeout(function () { t.loaded || e("https://standby.comm100vue.com/livechat.ashx?siteId="); }, 5e3); })(Comm100API || {});
@@ -652,294 +723,318 @@
     Comm100API.onReady = function () {
       document.getElementById('liveChatLink').style.display = '';
 
-      window.dispatchEvent(
-        new CustomEvent('comm100Ready', {
-          detail: { instance: Comm100API },
-        })
-      );
+      const commm100ReadyEvent = new CustomEvent('comm100Ready', {
+        detail: { instance: Comm100API }
+      });
+
+      if (window.__bdaim && (window.__bdaim.isAppInsightsLoaded || window.__bdaim.isAppInsightsEnabled === false)) {
+        window.dispatchEvent(commm100ReadyEvent);
+        return;
+      }
+
+      window.addEventListener('appInsightsReady', function () {
+        window.dispatchEvent(commm100ReadyEvent);
+      });
     };
   </script>
 </head>
 
 <body class="fs-unmask">
-  <header class="sc-gILORG gpHNAT sc-eVBRet imebRT" data-hidden="false" data-piece-id="header">
-    <div class="sc-dwVMhp lfEQId">
-      <div class="dOFsBi">
-        <div class="logo">
-          <a href="/" aria-label="Via Benefits homepage" class="kiVfhQ">
-            <img src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png"
-              alt="Via Benefits logo" />
-          </a>
-        </div>
+<header class="sc-gILORG gpHNAT sc-eVBRet imebRT" data-hidden="false" data-piece-id="header">
+  <div class="sc-dwVMhp lfEQId">
+    <div class="dOFsBi">
+      <div class="logo">
+        <a href="/" aria-label="Via Benefits homepage" class="kiVfhQ">
+          <img src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png"
+               alt="Via Benefits logo" />
+        </a>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
-  <div class="ficWV">
-    <div id="error-app">
-      <div>
-        <div id="main-content" role="main" class="sc-dwVMhp lfEQId sc-hbjaKc eMpMeg">
-          <div class="top-border">&nbsp;</div>
+<div class="ficWV">
+  <div id="error-app">
+    <div>
+      <div id="main-content" role="main" class="sc-dwVMhp lfEQId sc-hbjaKc eMpMeg">
+        <div class="top-border">&nbsp;</div>
 
-          <div class="fZxPXu">
-            <div class="kWdWjz">
-              <img
+        <div class="fZxPXu">
+          <div class="kWdWjz">
+            <img
                 src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
-                class="gtZfrz dHjbSE" />
-            </div>
-            <div class="gsvxjx">
+              class="gtZfrz dHjbSE" />
+          </div>
+          <div class="gsvxjx">
               <h1 class="bPdQbX">Page Unavailable</h1>
-              <p>
+            <p>
                 The page you attempted to reach is currently unavailable.
                 Please wait a few moments, then
                 <a onClick="window.location.reload()" href="#">refresh</a> the
                 page to try again.
-              </p>
-              <p>
-                If this issue continues or you need more information, you can
-                contact
-                <a href="https://app.viabenefits.com/about/contact">Via Benefits Support</a>
-                at <a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY:
-                711)<span id="liveChatLink" style="display: none">
+            </p>
+            <p>
+              If this issue continues or you need more information, you can
+              contact
+              <a href="https://app.viabenefits.com/about/contact">Via Benefits Support</a>
+              at <a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY:
+              711)<span id="liveChatLink" style="display: none">
                   or
                   <a onClick="Comm100API.do('livechat.button.click')" href="#">live chat</a></span>.
-              </p>
-              <div id="diagnostics" style="display: none">
-                <small>
-                  <details>
-                    <summary>Additional Diagnostic Details</summary>
-                    Please provide these details when contacting support to resolve the issue.
-                    <div style="margin-top: 10px; font-size: small">
-                      <em>
-                        <a href="#" onClick="copyToClipboard(getDiagnosticsAsText())" style="cursor: copy">Click here</a> to copy all details to the clipboard
-                        <i class="bds-icon bds-copy copy-icon" aria-hidden="true" title="Copy to clipboard"
-                           onClick="copyToClipboard(getDiagnosticsAsText())"></i>
-                      </em>
-                      <ul class="diagnostic-container" id="diagnostics-list">
-                        <li class="diagnostic-label">Recording Link:</li>
-                        <li id="fullStoryLink" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">URL:</li>
-                        <li id="url" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Username:</li>
-                        <li id="username" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Participant Correlation ID:</li>
-                        <li id="participantId" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Is Agent:</li>
-                        <li id="isAgent" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Campaign:</li>
-                        <li id="campaignKeyword" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Session ID:</li>
-                        <li id="appInsightsSessionId" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Session User ID:</li>
-                        <li id="appInsightsUserId" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Timestamp:</li>
-                        <li id="timestamp" class="diagnostic-value"></li>
-                        <li class="diagnostic-label">Browser:</li>
-                        <li id="browser" class="diagnostic-value no-border"></li>
-                      </ul>
-                  </details>
-                </small>
-              </div>
-              <script>
-                function getEnvironmentFromHost() {
-                  const segments = window.location.hostname.toLowerCase().split('.');
-                  if (segments.length === 3 && segments[0].toLowerCase() === 'staging') {
-                    return 'stage';
-                  }
-
-                  return segments.length === 4 ? segments[1] : 'prod';
-                }
-
-                function getNormalizedEnvironmentFromHost() {
-                  const environment = getEnvironmentFromHost();
-                  return environment === 'prod' ? '' : environment;
-                }
-
-                function getCookie(name) {
-                  return document.cookie
-                    .split('; ')
-                    .find((cookie) => cookie.startsWith(`${name}=`))
-                    ?.split('=')[1] ?? null;
-                }
-
-                function copyToClipboard(text) {
-                  if (!navigator.permissions) {
-                    alert('Unable to copy. Must copy manually.');
-                    return;
-                  }
-
-                  navigator.permissions.query({ name: 'clipboard-write' })
-                    .then(({ state }) => {
-                      if (state.toLowerCase() !== 'granted') {
-                        alert('Clipboard access requires user permission');
-                        return Promise.reject(new Error('Permission not granted'));
-                      }
-                      return navigator.clipboard.writeText(text);
-                    })
-                    .catch((exception) => {
-                      alert('Must copy manually');
-                      console.error(exception);
-                    });
-                }
-
-                function getContext(key) {
-                  const context = sessionStorage.getItem(key);
-                  return context ? JSON.parse(context) : null;
-                }
-
-                let diagnostics = {};
-                function updateDiagnostics({ fullStoryLink, fullStorySessionId } = {}) {
-                  const userContext = getContext('userContext');
-                  let username = sessionStorage.getItem('userName');
-                  if (username === 'undefined') { username = undefined; }
-
-                  diagnostics = {
-                    ...diagnostics,
-                    fullStoryLink: fullStoryLink || diagnostics.fullStoryLink,
-                    fullStorySessionId: fullStorySessionId || diagnostics.fullStorySessionId,
-                    url: window.location.href,
-                    username: username,
-                    participantId: (userContext && userContext.availability && userContext.availability.participantId),
-                    isAgent: (userContext && userContext.availability && userContext.availability.isAgent),
-                    campaignKeyword: getCookie(`currentCampaign${(getNormalizedEnvironmentFromHost() ? '_' + getNormalizedEnvironmentFromHost() : undefined)}`),
-                    appInsightsSessionId: getCookie('ai_session'),
-                    appInsightsUserId: getCookie('ai_user'),
-                    timestamp: new Date().toLocaleString('en-US', { timeZoneName: 'short' }),
-                    sourceHost: window.location.hostname,
-                    browser: navigator.userAgent,
-                  };
-
-                  Object.keys(diagnostics).forEach(key => {
-                    if (!diagnostics[key]) diagnostics[key] = '';
-                  });
-                }
-
-                function getDiagnosticsAsText() {
-                  return Object.entries(diagnostics)
-                    .filter(([key, value]) => value)
-                    .map(([key, value]) => `${key}: ${value}`)
-                    .join('\n');
-                }
-
-                function populateDiagnostics() {
-                  const elements = document.querySelectorAll('#diagnostics-list li:nth-child(2n)');
-
-                  const currentDiagnostics = {...diagnostics};
-                  if (currentDiagnostics.fullStoryLink) {
-                    currentDiagnostics.fullStoryLink = `${currentDiagnostics.fullStorySessionId}|${currentDiagnostics.fullStoryLink}`;
-                  }
-
-                  for (const element of elements) {
-                    const key = element.id;
-                    const value = currentDiagnostics[key];
-
-                    if (key.endsWith('Link')) {
-                      const [title, url] = value.split('|');
-                      element.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`;
-                    }
-                    else {
-                      element.textContent = value;
-                    }
-
-                    const display = value ? 'block' : 'none';
-                    element.style.display = display;
-                    element.previousElementSibling.style.display = display;
-                  }
-
-                  const diagnosticsElement = document.getElementById('diagnostics');
-                  diagnosticsElement.style.display = 'block';
-                }
-
-                window.addEventListener("fullStoryReady", function (e) {
-                  const { sessionUrlAtTime: fullStoryLink, sessionId: fullStorySessionId } = e.detail;
-
-                  updateDiagnostics({ fullStoryLink, fullStorySessionId });
-                  populateDiagnostics();
-                });
-
-                try {
-                  updateDiagnostics();
-                  populateDiagnostics();
-                } catch (error) {
-                  console.error('Error populating diagnostics:', error);
-                }
-              </script>
+            </p>
+            <div id="diagnostics" style="display: none">
+              <small>
+                <details>
+                  <summary>Additional Diagnostic Details</summary>
+                  Please provide these details when contacting support to resolve the issue.
+                  <div style="margin-top: 10px; font-size: small">
+                    <em>
+                      <a href="#" onClick="copyToClipboard(getDiagnosticsAsText())" style="cursor: copy">Click here</a> to copy all details to the clipboard
+                      <i class="bds-icon bds-copy copy-icon" aria-hidden="true" title="Copy to clipboard"
+                         onClick="copyToClipboard(getDiagnosticsAsText())"></i>
+                    </em>
+                    <ul class="diagnostic-container" id="diagnostics-list">
+                      <li class="diagnostic-label">Recording Link:</li>
+                      <li id="fullStoryLink" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">URL:</li>
+                      <li id="url" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Username:</li>
+                      <li id="username" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Participant Correlation ID:</li>
+                      <li id="participantId" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Is Agent:</li>
+                      <li id="isAgent" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Campaign:</li>
+                      <li id="campaignKeyword" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Trace/Operation ID:</li>
+                      <li id="appInsightsTraceId" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Session ID:</li>
+                      <li id="appInsightsSessionId" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Session Authentication ID:</li>
+                      <li id="appInsightsAuthenticationId" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Session User ID:</li>
+                      <li id="appInsightsUserId" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Timestamp:</li>
+                      <li id="timestamp" class="diagnostic-value"></li>
+                      <li class="diagnostic-label">Browser:</li>
+                      <li id="browser" class="diagnostic-value no-border"></li>
+                    </ul>
+                </details>
+              </small>
             </div>
-            <img
+            <script>
+              function getEnvironmentFromHost() {
+                const segments = window.location.hostname.toLowerCase().split('.');
+                if (segments.length === 3 && segments[0].toLowerCase() === 'staging') {
+                  return 'stage';
+                }
+
+                return segments.length === 4 ? segments[1] : 'prod';
+              }
+
+              function getNormalizedEnvironmentFromHost() {
+                const environment = getEnvironmentFromHost();
+                return environment === 'prod' ? '' : environment;
+              }
+
+              function getCookie(name) {
+                return document.cookie
+                  .split('; ')
+                  .find((cookie) => cookie.startsWith(`${name}=`))
+                  ?.split('=')[1] ?? null;
+              }
+
+              function copyToClipboard(text) {
+                if (!navigator.permissions) {
+                  alert('Unable to copy. Must copy manually.');
+                  return;
+                }
+
+                navigator.permissions.query({ name: 'clipboard-write' })
+                  .then(({ state }) => {
+                    if (state.toLowerCase() !== 'granted') {
+                      alert('Clipboard access requires user permission');
+                      return Promise.reject(new Error('Permission not granted'));
+                    }
+                    return navigator.clipboard.writeText(text);
+                  })
+                  .catch((exception) => {
+                    alert('Must copy manually');
+                    console.error(exception);
+                  });
+              }
+
+              function getContext(key) {
+                const context = sessionStorage.getItem(key);
+                return context ? JSON.parse(context) : null;
+              }
+
+              let diagnostics = {};
+              function updateDiagnostics({ fullStoryLink, fullStorySessionId } = {}) {
+                const userContext = getContext('userContext');
+                let username = sessionStorage.getItem('userName');
+                if (username === 'undefined') { username = undefined; }
+
+                const isAppInsightsLoaded = window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context;
+
+                let appInsightsAuthenticationId = (isAppInsightsLoaded && appInsights.context.user.authenticatedId) || undefined;
+                let participantId = (userContext && userContext.availability && userContext.availability.participantId) || undefined;
+                if (appInsightsAuthenticationId && !participantId) {
+                  const split = appInsightsAuthenticationId.split('/');
+                  if (split.length > 1 && split[0].trim().toLowerCase() === 'participant') {
+                    participantId = split[1].trim();
+                  }
+                }
+
+                diagnostics = {
+                  ...diagnostics,
+                  fullStoryLink: fullStoryLink || diagnostics.fullStoryLink,
+                  fullStorySessionId: fullStorySessionId || diagnostics.fullStorySessionId,
+                  url: window.location.href,
+                  username,
+                  participantId,
+                  isAgent: (userContext && usercontext.availability && usercontext.availability.isAgent) || undefined,
+                  campaignKeyword: getCookie(`currentCampaign${(getNormalizedEnvironmentFromHost() ? '_' + getNormalizedEnvironmentFromHost() : undefined)}`),
+                  appInsightsTraceId: isAppInsightsLoaded ? appInsights.getTraceCtx().getTraceId() : undefined,
+                  appInsightsSessionId: isAppInsightsLoaded ? appInsights.context.getSessionId() : getCookie('ai_session'),
+                  appInsightsUserId: isAppInsightsLoaded ? appInsights.context.user.id : getCookie('ai_user'),
+                  appInsightsAuthenticationId,
+                  timestamp: new Date().toLocaleString('en-US', { timeZoneName: 'short' }),
+                  sourceHost: window.location.hostname,
+                  browser: navigator.userAgent
+                };
+
+                Object.keys(diagnostics).forEach(key => {
+                  if (!diagnostics[key]) diagnostics[key] = '';
+                });
+              }
+
+              function getDiagnosticsAsText() {
+                return Object.entries(diagnostics)
+                  .filter(([key, value]) => value)
+                  .map(([key, value]) => `${key}: ${value}`)
+                  .join('\n');
+              }
+
+              function populateDiagnostics() {
+                const elements = document.querySelectorAll('#diagnostics-list li:nth-child(2n)');
+
+                const currentDiagnostics = {...diagnostics};
+                if (currentDiagnostics.fullStoryLink) {
+                  currentDiagnostics.fullStoryLink = `${currentDiagnostics.fullStorySessionId}|${currentDiagnostics.fullStoryLink}`;
+                }
+
+                for (const element of elements) {
+                  const key = element.id;
+                  const value = currentDiagnostics[key];
+
+                  if (key.endsWith('Link')) {
+                    const [title, url] = value.split('|');
+                    element.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`;
+                  }
+                  else {
+                    element.textContent = value;
+                  }
+
+                  const display = value ? 'block' : 'none';
+                  element.style.display = display;
+                  element.previousElementSibling.style.display = display;
+                }
+
+                const diagnosticsElement = document.getElementById('diagnostics');
+                diagnosticsElement.style.display = 'block';
+              }
+
+              window.addEventListener("fullStoryReady", function (e) {
+                const { sessionUrlAtTime: fullStoryLink, sessionId: fullStorySessionId } = e.detail;
+
+                updateDiagnostics({ fullStoryLink, fullStorySessionId });
+                populateDiagnostics();
+              });
+
+              try {
+                updateDiagnostics();
+                populateDiagnostics();
+              } catch (error) {
+                console.error('Error populating diagnostics:', error);
+              }
+            </script>
+          </div>
+          <img
               src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
               alt="Error in the clouds" class="gtZfrz" />
-          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <footer class="sc-hbyLVd iIgDPG sc-cgFpzT jlUbBR">
-    <div class="sc-dwVMhp sc-oclUV lfEQId hGVbps">
-      <div>
-        <ul class="sc-cQwIYT hCaFHM">
-          <li class="sc-knuRna RMAsu">
-            <a href="/about/privacy-policy">Privacy Policy</a>
-          </li>
-          <li class="sc-knuRna RMAsu">
-            <a href="/about/licensing-legal"> Licensing &amp; Legal </a>
-          </li>
-          <li class="sc-knuRna RMAsu">
-            <button aria-haspopup="dialog" type="button">
-              Language Assistance
-            </button>
-          </li>
-          <li class="sc-knuRna RMAsu">
-            <a href="/about">About Us</a>
-          </li>
-          <li class="sc-knuRna RMAsu">
-            <a href="/about/contact">Contact Us</a>
-          </li>
-        </ul>
-      </div>
-      <div class="sc-hLaujc ivsyaY">
-        Copyright Ⓒ&nbsp;
-        <span id="currentYear"></span>
-        <script>
-          document.getElementById('currentYear').textContent = new Date().getFullYear();
-        </script>&nbsp;Extend Health, LLC All Rights Reserved
-      </div>
+<footer class="sc-hbyLVd iIgDPG sc-cgFpzT jlUbBR">
+  <div class="sc-dwVMhp sc-oclUV lfEQId hGVbps">
+    <div>
+      <ul class="sc-cQwIYT hCaFHM">
+        <li class="sc-knuRna RMAsu">
+          <a href="/about/privacy-policy">Privacy Policy</a>
+        </li>
+        <li class="sc-knuRna RMAsu">
+          <a href="/about/licensing-legal"> Licensing &amp; Legal </a>
+        </li>
+        <li class="sc-knuRna RMAsu">
+          <button aria-haspopup="dialog" type="button">
+            Language Assistance
+          </button>
+        </li>
+        <li class="sc-knuRna RMAsu">
+          <a href="/about">About Us</a>
+        </li>
+        <li class="sc-knuRna RMAsu">
+          <a href="/about/contact">Contact Us</a>
+        </li>
+      </ul>
     </div>
-    <div class="sc-dwVMhp sc-hbjaKc lfEQId jvvhis">
-      <p>
-        All insurance products are offered through Via Benefits Insurance
-        Services (known in New York as ViaBenefits Insurance Services, LLC and
-        known in New Mexico as Extend Insurance Services, LLC).
-      </p>
-      <p>
-        <strong>
-          Via Benefits is not connected with or endorsed by the US government
-          or the Center for Medicare Services.
-        </strong>
-      </p>
-      <p>
-        Insurance rates for the insurance products and services offered by Via
-        Benefits are subject to change. The insurance products and services
-        offered by Via Benefits may not be available in all states. It is your
-        responsibility to enroll for coverage during the applicable enrollment
-        periods (such as the Open Enrollment Period or any Special Enrollment
-        Periods). Via Benefits receives compensation in the form of
-        commissions from insurance companies from the sale of insurance
-        products and services we offer. Some of the compensation that Via
-        Benefits receives may be contingent and may vary depending on a number
-        of factors, including the insurance contract and insurer you select.
-        In some case, other factors such as the volume of business Via
-        Benefits provides to the insurer or the profitability of the insurance
-        policies that Via Benefits provides to the insurer also may affect our
-        compensation. Via Benefits may accept this compensation in locations
-        where it is legally permissible and meets standards and controls to
-        address conflicts of interest. Whether or how much insurers may pay in
-        such compensation does not play any role in the Via Benefits'
-        insurance recommendations. Via Benefits also may receive other
-        compensation from third parties, such as for selling or referring the
-        sale of other products or services.
-      </p>
+    <div class="sc-hLaujc ivsyaY">
+      Copyright Ⓒ&nbsp;
+      <span id="currentYear"></span>
+      <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+      </script>&nbsp;Extend Health, LLC All Rights Reserved
     </div>
-  </footer>
+  </div>
+  <div class="sc-dwVMhp sc-hbjaKc lfEQId jvvhis">
+    <p>
+      All insurance products are offered through Via Benefits Insurance
+      Services (known in New York as ViaBenefits Insurance Services, LLC and
+      known in New Mexico as Extend Insurance Services, LLC).
+    </p>
+    <p>
+      <strong>
+        Via Benefits is not connected with or endorsed by the US government
+        or the Center for Medicare Services.
+      </strong>
+    </p>
+    <p>
+      Insurance rates for the insurance products and services offered by Via
+      Benefits are subject to change. The insurance products and services
+      offered by Via Benefits may not be available in all states. It is your
+      responsibility to enroll for coverage during the applicable enrollment
+      periods (such as the Open Enrollment Period or any Special Enrollment
+      Periods). Via Benefits receives compensation in the form of
+      commissions from insurance companies from the sale of insurance
+      products and services we offer. Some of the compensation that Via
+      Benefits receives may be contingent and may vary depending on a number
+      of factors, including the insurance contract and insurer you select.
+      In some case, other factors such as the volume of business Via
+      Benefits provides to the insurer or the profitability of the insurance
+      policies that Via Benefits provides to the insurer also may affect our
+      compensation. Via Benefits may accept this compensation in locations
+      where it is legally permissible and meets standards and controls to
+      address conflicts of interest. Whether or how much insurers may pay in
+      such compensation does not play any role in the Via Benefits'
+      insurance recommendations. Via Benefits also may receive other
+      compensation from third parties, such as for selling or referring the
+      sale of other products or services.
+    </p>
+  </div>
+</footer>
 </body>
 </html>
