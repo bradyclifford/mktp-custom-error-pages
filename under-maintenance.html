@@ -153,7 +153,7 @@
         window.__bdaim.isAppInsightsEnabled = true;
 
         <!-- prettier-ignore -->
-        !(function (T, l, y) { var S = T.location, k = "script", D = "connectionString", C = "ingestionendpoint", I = "disableExceptionTracking", E = "ai.device.", b = "toLowerCase", w = "crossOrigin", N = "POST", e = "appInsightsSDK", t = y.name || "appInsights"; (y.name || T[e]) && (T[e] = t); var n = T[t] || (function (d) { var g = !1, f = !1, m = { initialize: !0, queue: [], sv: "5", version: 2, config: d }; function v(e, t) { var n = {}, a = "Browser"; return ((n[E + "id"] = a[b]()), (n[E + "type"] = a), (n["ai.operation.name"] = (S && S.pathname) || "_unknown_"), (n["ai.internal.sdkVersion"] = "javascript:snippet_" + (m.sv || m.version)), { time: (function () { var e = new Date(); function t(e) { var t = "" + e; return 1 === t.length && (t = "0" + t), t; } return (e.getUTCFullYear() + "-" + t(1 + e.getUTCMonth()) + "-" + t(e.getUTCDate()) + "T" + t(e.getUTCHours()) + ":" + t(e.getUTCMinutes()) + ":" + t(e.getUTCSeconds()) + "." + ((e.getUTCMilliseconds() / 1e3).toFixed(3) + "").slice(2, 5) + "Z"); })(), name: "Microsoft.ApplicationInsights." + e.replace(/-/g, "") + "." + t, sampleRate: 100, tags: n, data: { baseData: { ver: 2 } }, }); } var h = d.url || y.src; if (h) { function a(e) { var t, n, a, i, r, o, s, c, u, p, l; (g = !0), (m.queue = []), f || ((f = !0), (t = h), (s = (function () { var e = {}, t = d.connectionString; if (t) for (var n = t.split(";"), a = 0; a < n.length; a++) { var i = n[a].split("="); 2 === i.length && (e[i[0][b]()] = i[1]); } if (!e[C]) { var r = e.endpointsuffix, o = r ? e.location : null; e[C] = "https://" + (o ? o + "." : "") + "dc." + (r || "services.visualstudio.com"); } return e; })()), (c = s[D] || d[D] || ""), (u = s[C]), (p = u ? u + "/v2/track" : d.endpointUrl), (l = []).push(((n = "SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)"), (a = t), (i = p), ((o = (r = v(c, "Exception")).data).baseType = "ExceptionData"), (o.baseData.exceptions = [{ typeName: "SDKLoadFailed", message: n.replace(/\./g, "-"), hasFullStack: !1, stack: n + "\nSnippet failed to load [" + a + "] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: " + ((S && S.pathname) || "_unknown_") + "\nEndpoint: " + i, parsedStack: [], },]), r)), l.push((function (e, t, n, a) { var i = v(c, "Message"), r = i.data; r.baseType = "MessageData"; var o = r.baseData; return ((o.message = 'AI (Internal): 99 message:"' + ("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) (" + n + ")").replace(/\"/g, "") + '"'), (o.properties = { endpoint: a }), i); })(0, 0, t, p)), (function (e, t) { if (JSON) { var n = T.fetch; if (n && !y.useXhr) n(t, { method: N, body: JSON.stringify(e), mode: "cors", }); else if (XMLHttpRequest) { var a = new XMLHttpRequest(); a.open(N, t), a.setRequestHeader("Content-type", "application/json"), a.send(JSON.stringify(e)); } } })(l, p)); } function i(e, t) { f || setTimeout(function () { (!t && m.core) || a(); }, 500); } var e = (function () { var n = l.createElement(k); n.src = h; var e = y[w]; return ((!e && "" !== e) || "undefined" == n[w] || (n[w] = e), (n.onload = i), (n.onerror = a), (n.onreadystatechange = function (e, t) { ("loaded" !== n.readyState && "complete" !== n.readyState) || i(0, t); }), n); })(); y.ld < 0 ? l.getElementsByTagName("head")[0].appendChild(e) : setTimeout(function () { l.getElementsByTagName(k)[0].parentNode.appendChild(e); }, y.ld || 0); } try { m.cookie = l.cookie; } catch (p) { } function t(e) { for (; e.length;) !(function (t) { m[t] = function () { var e = arguments; g || m.queue.push(function () { m[t].apply(m, e); }); }; })(e.pop()); } var n = "track", r = "TrackPage", o = "TrackEvent"; t([n + "Event", n + "PageView", n + "Exception", n + "Trace", n + "DependencyData", n + "Metric", n + "PageViewPerformance", "start" + r, "stop" + r, "start" + o, "stop" + o, "addTelemetryInitializer", "setAuthenticatedUserContext", "clearAuthenticatedUserContext", "flush",]), (m.SeverityLevel = { Verbose: 0, Information: 1, Warning: 2, Error: 3, Critical: 4, }); var s = (d.extensionConfig || {}).ApplicationInsightsAnalytics || {}; if (!0 !== d[I] && !0 !== s[I]) { var c = "onerror"; t(["_" + c]); var u = T[c]; (T[c] = function (e, t, n, a, i) { var r = u && u(e, t, n, a, i); return (!0 !== r && m["_" + c]({ message: e, url: t, lineNumber: n, columnNumber: a, error: i, }), r); }), (d.autoExceptionInstrumented = !0); } return m; })(y.cfg); function a() { y.onInit && y.onInit(n); } (T[t] = n).queue && 0 === n.queue.length ? (n.queue.push(a), n.trackPageView({})) : a(); })(window, document, {
+            !(function (T, l, y) { var S = T.location, k = "script", D = "connectionString", C = "ingestionendpoint", I = "disableExceptionTracking", E = "ai.device.", b = "toLowerCase", w = "crossOrigin", N = "POST", e = "appInsightsSDK", t = y.name || "appInsights"; (y.name || T[e]) && (T[e] = t); var n = T[t] || (function (d) { var g = !1, f = !1, m = { initialize: !0, queue: [], sv: "5", version: 2, config: d }; function v(e, t) { var n = {}, a = "Browser"; return ((n[E + "id"] = a[b]()), (n[E + "type"] = a), (n["ai.operation.name"] = (S && S.pathname) || "_unknown_"), (n["ai.internal.sdkVersion"] = "javascript:snippet_" + (m.sv || m.version)), { time: (function () { var e = new Date(); function t(e) { var t = "" + e; return 1 === t.length && (t = "0" + t), t; } return (e.getUTCFullYear() + "-" + t(1 + e.getUTCMonth()) + "-" + t(e.getUTCDate()) + "T" + t(e.getUTCHours()) + ":" + t(e.getUTCMinutes()) + ":" + t(e.getUTCSeconds()) + "." + ((e.getUTCMilliseconds() / 1e3).toFixed(3) + "").slice(2, 5) + "Z"); })(), name: "Microsoft.ApplicationInsights." + e.replace(/-/g, "") + "." + t, sampleRate: 100, tags: n, data: { baseData: { ver: 2 } }, }); } var h = d.url || y.src; if (h) { function a(e) { var t, n, a, i, r, o, s, c, u, p, l; (g = !0), (m.queue = []), f || ((f = !0), (t = h), (s = (function () { var e = {}, t = d.connectionString; if (t) for (var n = t.split(";"), a = 0; a < n.length; a++) { var i = n[a].split("="); 2 === i.length && (e[i[0][b]()] = i[1]); } if (!e[C]) { var r = e.endpointsuffix, o = r ? e.location : null; e[C] = "https://" + (o ? o + "." : "") + "dc." + (r || "services.visualstudio.com"); } return e; })()), (c = s[D] || d[D] || ""), (u = s[C]), (p = u ? u + "/v2/track" : d.endpointUrl), (l = []).push(((n = "SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)"), (a = t), (i = p), ((o = (r = v(c, "Exception")).data).baseType = "ExceptionData"), (o.baseData.exceptions = [{ typeName: "SDKLoadFailed", message: n.replace(/\./g, "-"), hasFullStack: !1, stack: n + "\nSnippet failed to load [" + a + "] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: " + ((S && S.pathname) || "_unknown_") + "\nEndpoint: " + i, parsedStack: [], },]), r)), l.push((function (e, t, n, a) { var i = v(c, "Message"), r = i.data; r.baseType = "MessageData"; var o = r.baseData; return ((o.message = 'AI (Internal): 99 message:"' + ("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) (" + n + ")").replace(/\"/g, "") + '"'), (o.properties = { endpoint: a }), i); })(0, 0, t, p)), (function (e, t) { if (JSON) { var n = T.fetch; if (n && !y.useXhr) n(t, { method: N, body: JSON.stringify(e), mode: "cors", }); else if (XMLHttpRequest) { var a = new XMLHttpRequest(); a.open(N, t), a.setRequestHeader("Content-type", "application/json"), a.send(JSON.stringify(e)); } } })(l, p)); } function i(e, t) { f || setTimeout(function () { (!t && m.core) || a(); }, 500); } var e = (function () { var n = l.createElement(k); n.src = h; var e = y[w]; return ((!e && "" !== e) || "undefined" == n[w] || (n[w] = e), (n.onload = i), (n.onerror = a), (n.onreadystatechange = function (e, t) { ("loaded" !== n.readyState && "complete" !== n.readyState) || i(0, t); }), n); })(); y.ld < 0 ? l.getElementsByTagName("head")[0].appendChild(e) : setTimeout(function () { l.getElementsByTagName(k)[0].parentNode.appendChild(e); }, y.ld || 0); } try { m.cookie = l.cookie; } catch (p) { } function t(e) { for (; e.length;) !(function (t) { m[t] = function () { var e = arguments; g || m.queue.push(function () { m[t].apply(m, e); }); }; })(e.pop()); } var n = "track", r = "TrackPage", o = "TrackEvent"; t([n + "Event", n + "PageView", n + "Exception", n + "Trace", n + "DependencyData", n + "Metric", n + "PageViewPerformance", "start" + r, "stop" + r, "start" + o, "stop" + o, "addTelemetryInitializer", "setAuthenticatedUserContext", "clearAuthenticatedUserContext", "flush",]), (m.SeverityLevel = { Verbose: 0, Information: 1, Warning: 2, Error: 3, Critical: 4, }); var s = (d.extensionConfig || {}).ApplicationInsightsAnalytics || {}; if (!0 !== d[I] && !0 !== s[I]) { var c = "onerror"; t(["_" + c]); var u = T[c]; (T[c] = function (e, t, n, a, i) { var r = u && u(e, t, n, a, i); return (!0 !== r && m["_" + c]({ message: e, url: t, lineNumber: n, columnNumber: a, error: i, }), r); }), (d.autoExceptionInstrumented = !0); } return m; })(y.cfg); function a() { y.onInit && y.onInit(n); } (T[t] = n).queue && 0 === n.queue.length ? (n.queue.push(a), n.trackPageView({})) : a(); })(window, document, {
           src: 'https://js.monitor.azure.com/scripts/b/ai.2.min.js', // The SDK URL Source
           ld: -1, // block page load and add to head.
           crossOrigin: 'anonymous', // When supplied this will add the provided value as the cross origin attribute on the script tag
@@ -222,6 +222,13 @@
           padding: 54px 0;
           padding-top: 140px;
           padding-bottom: 25px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          background: none;
+          padding-top: 70px;
         }
       }
 
@@ -333,8 +340,7 @@
       }
 
       .fZxPXu {
-        padding: 30px;
-        padding-top: 25px;
+        padding: 25px 30px 30px;
         display: flex;
         position: relative;
         flex-direction: column-reverse;
@@ -359,7 +365,7 @@
         font-size: 33px;
         font-weight: 550;
         line-height: 1.1;
-        margin: 0px;
+        margin: 0;
         padding-bottom: 15px;
       }
 
@@ -376,15 +382,15 @@
       }
 
       .gsvxjx {
-        margin: 0px;
+        margin: 0;
       }
 
       .gsvxjx p {
         font-size: 18px;
-        margin: 0px;
+        margin: 0;
         padding-right: 15px;
         padding-bottom: 20px;
-        text-wrap: balance;
+        text-wrap: pretty;
       }
 
       @media (min-width: 480px) {
@@ -403,7 +409,7 @@
       .kWdWjz {
         position: absolute;
         left: 0px;
-        top: 0px;
+        top: 0;
         width: 100%;
         height: 100%;
         z-index: -1;
@@ -416,6 +422,13 @@
         margin-bottom: 25px;
       }
 
+      @media (max-width: 480px) {
+        .eMpMeg {
+          box-shadow: none;
+          margin-bottom: unset;
+        }
+      }
+
       #main-content {
         background: none;
       }
@@ -423,6 +436,12 @@
       .top-border {
         background-color: rgb(0, 115, 182);
         height: 20px;
+      }
+
+      @media (max-width: 480px) {
+        .top-border {
+          display: none;
+        }
       }
 
       .dHjbSE {
@@ -443,7 +462,7 @@
       }
 
       .gtZfrz {
-        width: 60%;
+        width: 50%;
         margin: auto;
       }
 
@@ -473,7 +492,6 @@
         grid-template-columns: minmax(20px, auto) 1fr;
         gap: 10px;
         list-style-type: none;
-        padding: 0;
         padding: 15px;
         border: 1px solid lightblue;
         background-color: whitesmoke;
@@ -526,7 +544,6 @@
         -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
         justify-content: space-between;
-        min-height: 115px;
         padding: 10px;
       }
 
@@ -535,26 +552,49 @@
         min-width: 360px;
       }
 
-      .hGVbps {
-        background-color: #fff;
-        border-top: 2px solid #c110a0;
-        box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.3);
-        color: #000;
+      .hCaFHM {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
-        -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        font-size: 85%;
-        font-weight: 400;
-        -webkit-box-pack: justify;
-        -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        min-height: 115px;
-        padding: 10px;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .RMAsu {
+        margin-bottom: 5px;
+        padding-right: 5px;
+        text-align: left;
+      }
+
+      .RMAsu a {
+        color: inherit;
+        -webkit-text-decoration: none;
+        text-decoration: none;
+        padding-left: 4px;
+      }
+
+      .RMAsu button {
+        background: none;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        padding: 0;
+        text-align: inherit;
+        margin: 0;
+        padding-left: 4px;
+      }
+
+      .ivsyaY {
+        -webkit-align-self: baseline;
+        -ms-flex-item-align: baseline;
+        align-self: baseline;
+        text-align: right;
       }
 
       @media (min-width: 768px) {
@@ -563,11 +603,40 @@
         }
       }
 
+      @media (max-width: 480px) {
+        .hGVbps {
+          box-shadow: none;
+          margin-bottom: unset;
+        }
+
+        .ivsyaY {
+          padding-left: 4px;
+        }
+      }
+
       @media (min-width: 900px) {
         .lfEQId {
           margin-left: auto;
           margin-right: auto;
           width: 900px;
+        }
+
+        .hCaFHM {
+          -webkit-flex-direction: row;
+          -ms-flex-direction: row;
+          flex-direction: row;
+        }
+
+        .RMAsu:not(:last-child) {
+          border-right: 1px solid #919191;
+        }
+
+        .RMAsu {
+          margin-bottom: initial;
+        }
+
+        .ivsyaY {
+          text-align: initial;
         }
       }
 
@@ -615,7 +684,7 @@
       window['_fs_namespace'] = 'FS';
 
       <!-- prettier-ignore -->
-      (function (m, n, e, t, l, o, g, y) { if (e in m) { if (m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'); } return; } g = m[e] = function (a, b, s) { g.q ? g.q.push([a, b, s]) : g._api(a, b, s); }; g.q = []; o = n.createElement(t); o.async = 1; o.crossOrigin = 'anonymous'; o.src = 'https://' + _fs_script; y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o, y); g.identify = function (i, v, s) { g(l, { uid: i }, s); if (v) g(l, v, s) }; g.setUserVars = function (v, s) { g(l, v, s) }; g.event = function (i, v, s) { g('event', { n: i, p: v }, s) }; g.anonymize = function () { g.identify(!!0) }; g.shutdown = function () { g("rec", !1) }; g.restart = function () { g("rec", !0) }; g.log = function (a, b) { g("log", [a, b]) }; g.consent = function (a) { g("consent", !arguments.length || a) }; g.identifyAccount = function (i, v) { o = 'account'; v = v || {}; v.acctId = i; g(o, v) }; g.clearUserCookie = function () { }; g.setVars = function (n, p) { g('setVars', [n, p]); }; g._w = {}; y = 'XMLHttpRequest'; g._w[y] = m[y]; y = 'fetch'; g._w[y] = m[y]; if (m[y]) m[y] = function () { return g._w[y].apply(this, arguments) }; g._v = "1.3.0"; })(window, document, window['_fs_namespace'], 'script', 'user');
+        (function (m, n, e, t, l, o, g, y) { if (e in m) { if (m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'); } return; } g = m[e] = function (a, b, s) { g.q ? g.q.push([a, b, s]) : g._api(a, b, s); }; g.q = []; o = n.createElement(t); o.async = 1; o.crossOrigin = 'anonymous'; o.src = 'https://' + _fs_script; y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o, y); g.identify = function (i, v, s) { g(l, { uid: i }, s); if (v) g(l, v, s) }; g.setUserVars = function (v, s) { g(l, v, s) }; g.event = function (i, v, s) { g('event', { n: i, p: v }, s) }; g.anonymize = function () { g.identify(!!0) }; g.shutdown = function () { g("rec", !1) }; g.restart = function () { g("rec", !0) }; g.log = function (a, b) { g("log", [a, b]) }; g.consent = function (a) { g("consent", !arguments.length || a) }; g.identifyAccount = function (i, v) { o = 'account'; v = v || {}; v.acctId = i; g(o, v) }; g.clearUserCookie = function () { }; g.setVars = function (n, p) { g('setVars', [n, p]); }; g._w = {}; y = 'XMLHttpRequest'; g._w[y] = m[y]; y = 'fetch'; g._w[y] = m[y]; if (m[y]) m[y] = function () { return g._w[y].apply(this, arguments) }; g._v = "1.3.0"; })(window, document, window['_fs_namespace'], 'script', 'user');
     </script>
 
     <!-- Google -->
@@ -641,41 +710,6 @@
           window.dispatchEvent(googleTagReadyEvent);
         });
       }
-    </script>
-
-    <!-- Qualtrics -->
-    <script type="text/javascript" async>
-      // TODO: get ID from GitHub Configuration during deployment
-
-      <!-- prettier-ignore -->
-      (function () { var g = function (e, h, f, g) { this.get = function (a) { for (var a = a + "=", c = document.cookie.split(";"), b = 0, e = c.length; b < e; b++) { for (var d = c[b]; " " == d.charAt(0);) d = d.substring(1, d.length); if (0 == d.indexOf(a)) return d.substring(a.length, d.length); } return null; }; this.set = function (a, c) { var b = "", b = new Date(); b.setTime(b.getTime() + 6048e5); b = "; expires=" + b.toGMTString(); document.cookie = a + "=" + c + b + "; path=/; "; }; this.check = function () { var a = this.get(f); if (a) a = a.split(":"); else if (100 != e) "v" == h && (e = Math.random() >= e / 100 ? 0 : 100), (a = [h, e, 0]), this.set(f, a.join(":")); else return !0; var c = a[1]; if (100 == c) return !0; switch (a[0]) { case "v": return !1; case "r": return ((c = a[2] % Math.floor(100 / c)), a[2]++, this.set(f, a.join(":")), !c); } return !0; }; this.go = function () { if (this.check()) { var a = document.createElement("script"); a.type = "text/javascript"; a.src = g; document.body && document.body.appendChild(a); } }; this.start = function () { var t = this; "complete" !== document.readyState ? window.addEventListener ? window.addEventListener("load", function () { t.go(); }, !1) : window.attachEvent && window.attachEvent("onload", function () { t.go(); }) : t.go(); }; }; try { new g(100, "r", "QSI_S_ZN_0x5xjcuK1qVGfs1", "https://zn0x5xjcuk1qvgfs1-towerswatson.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_0x5xjcuK1qVGfs1").start(); } catch (i) { } })();
-    </script>
-
-    <!-- Comm100 -->
-    <div id="comm100-button-23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65"></div>
-    <script type="text/javascript" async>
-      // TODO: get ID from GitHub Configuration during deployment
-      var Comm100API = Comm100API || {};
-
-      <!-- prettier-ignore -->
-      (function (t) { function e(e) { var a = document.createElement("script"), c = document.getElementsByTagName("script")[0]; (a.type = "text/javascript"), (a.async = !0), (a.src = e + t.site_id), c.parentNode.insertBefore(a, c); } (t.chat_buttons = t.chat_buttons || []), t.chat_buttons.push({ code_plan: "23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65", div_id: "comm100-button-23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65", }), (t.site_id = 10002849), (t.main_code_plan = "23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65"), e("https://vue.comm100.com/livechat.ashx?siteId="), setTimeout(function () { t.loaded || e("https://standby.comm100vue.com/livechat.ashx?siteId="); }, 5e3); })(Comm100API || {});
-
-      Comm100API.onReady = function () {
-        document.getElementById('liveChatLink').style.display = '';
-
-        const commm100ReadyEvent = new CustomEvent('comm100Ready', {
-          detail: { instance: Comm100API }
-        });
-
-        if (window.__bdaim && (window.__bdaim.isAppInsightsLoaded || window.__bdaim.isAppInsightsEnabled === false)) {
-          window.dispatchEvent(commm100ReadyEvent);
-          return;
-        }
-
-        window.addEventListener('appInsightsReady', function () {
-          window.dispatchEvent(commm100ReadyEvent);
-        });
-      };
     </script>
   </head>
 
@@ -709,21 +743,32 @@
                 <h1 class="bPdQbX">Under Maintenance</h1>
                 <p>
                   We're currently conducting maintenance on our application. Please wait a few moments and
-                  <a onClick="window.location.reload()" href="#">try again</a>. We apologize for any inconvenience.
+                  <a onClick="window.location.reload()" href="javascript:void(0)">try again</a>. We apologize for any inconvenience.
 
-                  <span id="critical-diagnostic" style="color: #d0d4d8; font-size: 0.8em; margin-top: 0.5rem; display: none"></span>
+                  <br /><span
+                    id="critical-diagnostic"
+                    style="color: #d0d4d8; font-size: 0.7em; word-break: break-word; margin-top: 5px; display: none"
+                  ></span>
                 </p>
                 <p>
                   Visit our
-                  <a href="https://status.viabenefits.com/?utm_source=under-maintenance" target="_blank"> Status Center </a> for updates on
-                  system availability and estimated recovery times.
+                  <a href="https://status.viabenefits.com/?utm_source=under-maintenance" target="_blank" rel="noopener noreferrer">
+                    Status Center
+                  </a>
+                  for updates on system availability and estimated recovery times.
                 </p>
                 <p style="font-size: smaller">
-                  If this issue continues, you can contact
-                  <a href="https://help.viabenefits.com/contact/?utm_source=under-maintenance">Via Benefits Support</a>
-                  at <a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)<span id="liveChatLink" style="display: none">
-                    or
-                    <a onClick="Comm100API.do('livechat.button.click')" href="#">live chat</a></span
+                  If the issue continues or you need assistance, contact
+                  <a href="https://help.viabenefits.com/contact/?utm_source=under-maintenance" target="_blank" rel="noopener noreferrer"
+                    ><span style="white-space: nowrap">Via Benefits Support</span></a
+                  >
+                  at <span style="white-space: nowrap"><a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)</span>
+                  or
+                  <a
+                    href="https://vue.comm100.com/chatwindow.aspx?siteId=10002849&planId=23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >live chat</a
                   >.
                 </p>
                 <div id="diagnostics" style="font-size: small; display: none">
@@ -732,7 +777,7 @@
                     Please provide these details when contacting support to resolve the issue.
                     <div style="margin-top: 10px">
                       <em>
-                        <a href="#" onClick="copyToClipboard(getDiagnosticsAsText())" style="cursor: copy">Click here</a>
+                        <a href="javascript:void(0)" onClick="copyToClipboard(getDiagnosticsAsText())" style="cursor: copy">Click here</a>
                         to copy all details to the clipboard
                         <i
                           class="bds-icon bds-copy copy-icon"
@@ -758,7 +803,7 @@
                         <li id="appInsightsTraceId" class="diagnostic-value"></li>
                         <li class="diagnostic-label">Session ID:</li>
                         <li id="appInsightsSessionId" class="diagnostic-value"></li>
-                        <li class="diagnostic-label"> Session Authentication ID: </li>
+                        <li class="diagnostic-label">Session Authentication ID:</li>
                         <li id="appInsightsAuthenticationId" class="diagnostic-value"></li>
                         <li class="diagnostic-label">Session User ID:</li>
                         <li id="appInsightsUserId" class="diagnostic-value"></li>
@@ -915,9 +960,7 @@
                       diagnostics.appInsightsSessionId ||
                       window.location.href;
                     element.innerText = criticalValue?.toString().slice(0, 130);
-
-                    const display = criticalValue ? 'block' : 'none';
-                    element.style.display = display;
+                    element.style.display = criticalValue ? 'block' : 'none';
                   }
 
                   window.addEventListener('fullStoryReady', function (e) {
@@ -938,8 +981,8 @@
                 </script>
               </div>
               <img
-                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/under-construction.svg"
-                alt="Under Construction"
+                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
+                alt="Error in the clouds"
                 class="gtZfrz"
               />
             </div>
@@ -950,13 +993,26 @@
 
     <footer class="sc-hbyLVd iIgDPG sc-cgFpzT jlUbBR">
       <div class="sc-dwVMhp sc-oclUV lfEQId hGVbps">
-        <div>
+        <ul class="sc-cQwIYT hCaFHM">
+          <li class="sc-knuRna RMAsu">
+            <a href="https://viabenefits.com/about/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          </li>
+          <li class="sc-knuRna RMAsu">
+            <a href="https://viabenefits.com/about/licensing-legal/" target="_blank" rel="noopener noreferrer">Licensing &amp; Legal</a>
+          </li>
+          <li class="sc-knuRna RMAsu">
+            <a href="https://viabenefits.com/about/" target="_blank" rel="noopener noreferrer">About Us</a>
+          </li>
+          <li class="sc-knuRna RMAsu">
+            <a href="https://help.viabenefits.com/contact/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+          </li>
+        </ul>
+        <div class="sc-hLaujc ivsyaY">
           Copyright Ⓒ&nbsp;
           <span id="currentYear"></span>
           <script>
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-          </script>
-          &nbsp;Extend Health, LLC All Rights Reserved
+            document.getElementById('currentYear').textContent = new Date().getFullYear();</script
+          >&nbsp;Extend Health, LLC All Rights Reserved
         </div>
       </div>
     </footer>
