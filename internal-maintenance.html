@@ -1,26 +1,23 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="bdaim:custom-error-page-id" content="participant-outage/standalone" />
-    <meta name="bdaim:version" content="v1.1.0" />
+    <meta name="bdaim:custom-error-page-id" content="internal-maintenance" />
+    <meta name="bdaim:version" content="v1.2.0" />
     <!-- Intentional maintenance -->
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width" />
 
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="canonical" href="https://help.viabenefits.com/outages/?utm_source=participant-outage_standalone" />
+    <title>WTW - Maintenance</title>
 
-    <title>Via Benefits - Outage</title>
-
-    <!-- Keep assets referencing local -->
+    <!-- Keep assets referencing the CDN path -->
 
     <!-- Track Data -->
     <script type="text/javascript">
       (function () {
-        const scope = 'Maintenance/Participant/Standalone';
-        const eventName = scope + '/Custom Outage Error Page Shown';
+        const scope = 'Maintenance';
+        const eventName = scope + '/Under Maintenance Page Shown';
 
         window.contextualData = {};
         const data = window.contextualData;
@@ -170,49 +167,12 @@
       }
     </script>
 
-    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/source-sans-pro.css" />
+    <link rel="stylesheet" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/icons.css" />
 
-    <link rel="preload" href="via-benefits-logo.png" as="image" />
-    <link rel="preload" href="background.jpg" as="image" />
-
-    <link rel="preconnect" href="https://viabenefits.com/" />
-    <link rel="preconnect" href="https://help.viabenefits.com/" />
-    <link rel="preconnect" href="https://help.viabenefits.com/contact/" />
-    <link rel="preconnect" href="https://help.viabenefits.com/outages/" />
+    <link rel="preload" href="https://media.wtwco.com/-/media/WTW/Logo/Logo_Desktop.svg" as="image" />
 
     <style type="text/css">
-      @font-face {
-        font-family: 'Source Sans Pro';
-        font-style: normal;
-        font-weight: 300;
-        src: url('fonts/SourceSansPro-Light.otf.woff') format('woff');
-        font-display: fallback;
-      }
-
-      @font-face {
-        font-family: 'Source Sans Pro';
-        font-style: normal;
-        font-weight: 400;
-        src: url('fonts/SourceSansPro-Regular.otf.woff') format('woff');
-        font-display: fallback;
-      }
-
-      @font-face {
-        font-family: 'Source Sans Pro';
-        font-style: normal;
-        font-weight: 600;
-        src: url('fonts/SourceSansPro-Semibold.otf.woff') format('woff');
-        font-display: fallback;
-      }
-
-      @font-face {
-        font-family: 'Source Sans Pro';
-        font-style: normal;
-        font-weight: 700;
-        src: url('fonts/SourceSansPro-Bold.otf.woff') format('woff');
-        font-display: fallback;
-      }
-
       /* Base Styles - Mobile First */
       body {
         box-sizing: border-box;
@@ -404,18 +364,6 @@
         padding-left: 4px;
       }
 
-      .footer-link-item button {
-        background: none;
-        border: 0;
-        color: inherit;
-        cursor: pointer;
-        font: inherit;
-        padding: 0;
-        text-align: inherit;
-        margin: 0;
-        padding-left: 4px;
-      }
-
       .footer-copyright {
         align-self: baseline;
         text-align: right;
@@ -463,7 +411,7 @@
       /* Tablet Styles (768px and up) */
       @media (min-width: 768px) {
         body {
-          background: url(background.jpg);
+          background: url(https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/backgrounds/3.jpg);
           background-attachment: fixed;
           background-color: #d9e7dc;
           background-position: center bottom;
@@ -567,6 +515,64 @@
           width: 1200px;
         }
       }
+
+      /* Button Container - Links styled as buttons (Mobile First) */
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .button-container .button-link {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #00a0d2;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s;
+        white-space: nowrap;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .button-container .button-link:hover {
+        background-color: #0088b3;
+        text-decoration: none;
+      }
+
+      .button-container .button-link:active {
+        background-color: #006d8f;
+      }
+
+      .button-container .button-link:visited {
+        color: #fff;
+      }
+
+      /* Horizontal layout for larger screens */
+      @media (min-width: 601px) {
+        .button-container {
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: flex-start;
+        }
+
+        .button-container .button-link {
+          width: auto;
+          max-width: none;
+          flex-shrink: 0;
+        }
+      }
     </style>
 
     <!-- FullStory -->
@@ -607,12 +613,29 @@
       (function (m, n, e, t, l, o, g, y) { if (e in m) { if (m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'); } return; } g = m[e] = function (a, b, s) { g.q ? g.q.push([a, b, s]) : g._api(a, b, s); }; g.q = []; o = n.createElement(t); o.async = 1; o.crossOrigin = 'anonymous'; o.src = 'https://' + _fs_script; y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o, y); g.identify = function (i, v, s) { g(l, { uid: i }, s); if (v) g(l, v, s) }; g.setUserVars = function (v, s) { g(l, v, s) }; g.event = function (i, v, s) { g('event', { n: i, p: v }, s) }; g.anonymize = function () { g.identify(!!0) }; g.shutdown = function () { g("rec", !1) }; g.restart = function () { g("rec", !0) }; g.log = function (a, b) { g("log", [a, b]) }; g.consent = function (a) { g("consent", !arguments.length || a) }; g.identifyAccount = function (i, v) { o = 'account'; v = v || {}; v.acctId = i; g(o, v) }; g.clearUserCookie = function () { }; g.setVars = function (n, p) { g('setVars', [n, p]); }; g._w = {}; y = 'XMLHttpRequest'; g._w[y] = m[y]; y = 'fetch'; g._w[y] = m[y]; if (m[y]) m[y] = function () { return g._w[y].apply(this, arguments) }; g._v = "1.3.0"; })(window, document, window['_fs_namespace'], 'script', 'user');
     </script>
 
-    <!-- Qualtrics -->
-    <script async type="text/javascript">
-      // TODO: get ID from GitHub Configuration during deployment
+    <!-- Google -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W9CD68KC59"></script>
+    <script async>
+      window.dataLayer = window.dataLayer || [];
 
-      <!-- prettier-ignore -->
-      (function () { var g = function (e, h, f, g) { this.get = function (a) { for (var a = a + "=", c = document.cookie.split(";"), b = 0, e = c.length; b < e; b++) { for (var d = c[b]; " " == d.charAt(0);) d = d.substring(1, d.length); if (0 == d.indexOf(a)) return d.substring(a.length, d.length); } return null; }; this.set = function (a, c) { var b = "", b = new Date(); b.setTime(b.getTime() + 6048e5); b = "; expires=" + b.toGMTString(); document.cookie = a + "=" + c + b + "; path=/; "; }; this.check = function () { var a = this.get(f); if (a) a = a.split(":"); else if (100 != e) "v" == h && (e = Math.random() >= e / 100 ? 0 : 100), (a = [h, e, 0]), this.set(f, a.join(":")); else return !0; var c = a[1]; if (100 == c) return !0; switch (a[0]) { case "v": return !1; case "r": return ((c = a[2] % Math.floor(100 / c)), a[2]++, this.set(f, a.join(":")), !c); } return !0; }; this.go = function () { if (this.check()) { var a = document.createElement("script"); a.type = "text/javascript"; a.src = g; document.body && document.body.appendChild(a); } }; this.start = function () { var t = this; "complete" !== document.readyState ? window.addEventListener ? window.addEventListener("load", function () { t.go(); }, !1) : window.attachEvent && window.attachEvent("onload", function () { t.go(); }) : t.go(); }; }; try { new g(100, "r", "QSI_S_ZN_0x5xjcuK1qVGfs1", "https://zn0x5xjcuk1qvgfs1-towerswatson.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_0x5xjcuK1qVGfs1").start(); } catch (i) { } })();
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', 'G-W9CD68KC59');
+
+      const googleTagReadyEvent = new CustomEvent('googleTagReady', {
+        detail: { instance: gtag }
+      });
+
+      if (window.__bdaim && (window.__bdaim.isAppInsightsLoaded || window.__bdaim.isAppInsightsEnabled === false)) {
+        window.dispatchEvent(googleTagReadyEvent);
+      } else {
+        window.addEventListener('appInsightsReady', function () {
+          window.dispatchEvent(googleTagReadyEvent);
+        });
+      }
     </script>
   </head>
 
@@ -621,14 +644,8 @@
       <div class="container">
         <div class="header-inner">
           <div class="logo">
-            <a
-              href="https://help.viabenefits.com/?utm_source=participant-outage_standalone"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Via Benefits Help & Support"
-              class="logo-link"
-            >
-              <img src="via-benefits-logo.png" alt="Via Benefits logo" />
+            <a href="/" aria-label="Homepage" class="logo-link">
+              <img src="https://media.wtwco.com/-/media/WTW/Logo/Logo_Desktop.svg" alt="WTW logo" />
             </a>
           </div>
         </div>
@@ -643,51 +660,37 @@
 
             <div class="content-body">
               <div class="content-background">
-                <img src="error-cloud.svg" class="content-image content-background-image" />
+                <img
+                  src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/under-construction.svg"
+                  class="content-image content-background-image"
+                />
               </div>
               <div class="content-text">
-                <h1 class="content-title">Outage</h1>
+                <h1 class="content-title">Page Unavailable</h1>
                 <p>
-                  <strong
-                    >We are currently experiencing an
-                    <a href="https://help.viabenefits.com/outages/?utm_source=participant-outage_standalone" target="_blank">outage</a></strong
-                  >. The application you are trying to access is temporarily unavailable.
+                  We're currently conducting maintenance on our application. Please wait a few moments and
+                  <a onClick="window.location.reload()" href="javascript:void(0)">try again</a>. We apologize for any inconvenience.
 
                   <br /><span
                     id="critical-diagnostic"
                     style="color: #d0d4d8; font-size: 0.7em; word-break: break-word; margin-top: 5px; display: none"
                   ></span>
                 </p>
-                <p>
-                  Check the status of this outage in our
-                  <a
-                    href="https://status.viabenefits.com/?utm_source=participant-outage_standalone"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <p class="button-container">
+                  <a href="https://techhub.mktp.io/url-lookup" target="_blank" rel="noopener noreferrer" class="button-link"
+                    >Lookup Owning team</a
                   >
-                    Status Center</a>.
-                  Our team is actively investigating the issue.
-                </p>
-                <p style="font-size: smaller">
-                  If the issue continues or you need assistance, contact
-                  <a href="https://help.viabenefits.com/contact/?utm_source=participant-outage_standalone" target="_blank" rel="noopener noreferrer"
-                    ><span style="white-space: nowrap">Via Benefits Support</span></a
+                  <a href="https://status.mktp.io/?utm_source=internal-403" target="_blank" rel="noopener noreferrer" class="button-link"
+                    >Private Status Center</a
                   >
-                  at <span style="white-space: nowrap"><a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)</span>
-                  or
-                  <a
-                    href="https://vue.comm100.com/chatwindow.aspx?siteId=10002849&planId=23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >live chat</a
-                  >.
+                  <a href="javascript:void(0)" onclick="handleJiraBugCreation()" class="button-link">Create Jira Bug</a>
                 </p>
                 <div id="diagnostics" style="font-size: small; display: none">
                   <details
                     ontoggle="if(this.open) { try { this.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e) { this.scrollIntoView(); } }"
                   >
                     <summary>Additional Diagnostic Details</summary>
-                    Please provide these details when contacting support to resolve the issue.
+                    Include these details when attempting to resolve the issue with support.
                     <div style="margin-top: 10px">
                       <em>
                         <a href="javascript:void(0)" onClick="copyToClipboard(getDiagnosticsAsText())" style="cursor: copy">Click here</a>
@@ -724,6 +727,10 @@
                         <li id="timestamp" class="diagnostic-value"></li>
                         <li class="diagnostic-label">Browser:</li>
                         <li id="browser" class="diagnostic-value no-border"></li>
+                        <li class="diagnostic-label">Error Page ID:</li>
+                        <li id="errorPageId" class="diagnostic-value no-border"></li>
+                        <li class="diagnostic-label">Error Page Version:</li>
+                        <li id="errorPageVersion" class="diagnostic-value no-border"></li>
                       </ul>
                     </div>
                   </details>
@@ -822,7 +829,9 @@
                         timeZoneName: 'short'
                       }),
                       sourceHost: window.location.hostname,
-                      browser: navigator.userAgent
+                      browser: navigator.userAgent,
+                      errorPageId: document.querySelector('meta[name="bdaim:custom-error-page-id"]')?.content || undefined,
+                      errorPageVersion: document.querySelector('meta[name="bdaim:version"]')?.content || undefined
                     };
 
                     Object.keys(diagnostics).forEach(key => {
@@ -891,9 +900,75 @@
                   } catch (error) {
                     console.error('Error populating diagnostics:', error);
                   }
+
+                  function getJiraDescription() {
+                    const fullStoryLink = diagnostics.fullStoryLink || 'https://app.fullstory.com/ssodomain/wtwco.com';
+                    return `{panel:title=Session Details}
+* [FullStory Recording Link|${fullStoryLink}]
+* *URL*: ${window.location.href}
+* *Trace ID*: ${
+                      diagnostics.appInsightsTraceId ||
+                      `get from [FullStory recording|${fullStoryLink}] using [headers|https://im-kb.internal.towerswatson.com/x/fu1dOw]`
+                    }
+* *Timestamp of Occurrence*: ${new Date().toLocaleString('en-US', {
+                      timeZoneName: 'short'
+                    })}
+
+(i) See [System Information Guide|https://im-kb.internal.towerswatson.com/x/drt0Qg] for additional details
+
+h6. Detailed Diagnostics
+{noformat}
+${getDiagnosticsAsText()}
+{noformat}
+
+{panel}
+...
+`;
+                  }
+
+                  function getJiraBugCreationUrl() {
+                    const { participantId, householdId, agentId, isAgent } = diagnostics;
+
+                    const today = new Date();
+                    const day = today.getDate();
+                    const month = today.toLocaleString('en-US', { month: 'short' });
+                    const year = today.getFullYear().toString().slice(-2); // Last two digits of the year (e.g., "24")
+                    const occurrenceDate = `${day}/${month}/${year}`;
+
+                    const baseJiraCreationUrl = 'http://im-jira.internal.towerswatson.com/secure/CreateIssueDetails!init.jspa';
+
+                    return new URL(
+                      `${baseJiraCreationUrl}?${new URLSearchParams(
+                        Object.fromEntries(
+                          Object.entries({
+                            pid: 11000, // Bug Project
+                            issuetype: 1, // Bug
+                            labels: 'software-info-include',
+                            customfield_14489: occurrenceDate,
+                            summary: `Website issue on ${window.location.hostname}${window.location.pathname}`,
+                            customfield_13940: window.location.hostname,
+                            customfield_10618: participantId
+                              ? `${isAgent ? `agent (${agentId})` : 'participant'}: ${participantId}/${householdId}`
+                              : '',
+                            description: getJiraDescription() // Actual Result
+                          }).filter(([, value]) => value !== undefined && value !== null)
+                        )
+                      ).toString()}`
+                    );
+                  }
+
+                  function handleJiraBugCreation() {
+                    const bugCreationUrl = getJiraBugCreationUrl();
+                    window.open(bugCreationUrl, '_blank');
+                    console.info('Jira Bug Creation window opened', { url: bugCreationUrl });
+                  }
                 </script>
               </div>
-              <img src="error-cloud.svg" alt="Error in the clouds" class="content-image" />
+              <img
+                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/under-construction.svg"
+                alt="Error in the clouds"
+                class="content-image"
+              />
             </div>
           </div>
         </div>
@@ -904,16 +979,18 @@
       <div class="container footer-content">
         <ul class="footer-links">
           <li class="footer-link-item">
-            <a href="https://viabenefits.com/about/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            <a
+              href="https://teams.microsoft.com/l/channel/19%3Abecd7abf7a6c4b9f83e85549c501112e%40thread.tacv2/Individual%20Marketplace%20-%20Incident%20Response%C2%A0?groupId=a25b5175-24ca-492d-9285-14bfde85f729&tenantId=76e3921f-489b-4b7e-9547-9ea297add9b5"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Incident Response Channel</a
+            >
           </li>
           <li class="footer-link-item">
-            <a href="https://viabenefits.com/about/licensing-legal/" target="_blank" rel="noopener noreferrer">Licensing &amp; Legal</a>
+            <a href="https://im-kb.internal.towerswatson.com/x/w-TFPQ" target="_blank" rel="noopener noreferrer">Incident Severity</a>
           </li>
           <li class="footer-link-item">
-            <a href="https://viabenefits.com/about/" target="_blank" rel="noopener noreferrer">About Us</a>
-          </li>
-          <li class="footer-link-item">
-            <a href="https://help.viabenefits.com/contact/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+            <a href="https://status.viabenefits.com/" target="_blank" rel="noopener noreferrer">Public Status Center</a>
           </li>
         </ul>
         <div class="footer-copyright">
