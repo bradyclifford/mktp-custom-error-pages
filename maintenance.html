@@ -1,22 +1,23 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="bdaim:custom-error-page-id" content="participant-502" />
-    <meta name="bdaim:version" content="v1.1.0" />
+    <meta name="bdaim:custom-error-page-id" content="maintenance" />
+    <meta name="bdaim:version" content="v1.0.1" />
+    <!-- Intentional maintenance -->
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width" />
 
-    <title>Via Benefits - Unavailable</title>
+    <title>Via Benefits - Maintenance</title>
 
     <!-- Keep assets referencing the CDN path -->
 
     <!-- Track Data -->
     <script type="text/javascript">
       (function () {
-        const scope = 'Maintenance/Participant';
-        const eventName = scope + '/502 Custom Error Page Shown';
+        const scope = 'Maintenance';
+        const eventName = scope + '/Under Maintenance Page Shown';
 
         window.contextualData = {};
         const data = window.contextualData;
@@ -26,7 +27,6 @@
 
           const instance = e.detail.instance;
           instance.event(eventName, {
-            statusCode: 502,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -34,7 +34,6 @@
 
           instance.setVars('page', {
             scope: scope,
-            statusCode: 502,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -389,7 +388,6 @@
         padding-left: 4px;
       }
 
-
       .footer-copyright {
         align-self: baseline;
         text-align: right;
@@ -629,15 +627,15 @@
             <div class="content-body">
               <div class="content-background">
                 <img
-                  src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
+                  src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/under-construction.svg"
                   class="content-image content-background-image"
                 />
               </div>
               <div class="content-text">
                 <h1 class="content-title">Page Unavailable</h1>
                 <p>
-                  The page you attempted to reach is currently unavailable. Please wait a few moments, then
-                  <a onClick="window.location.reload()" href="javascript:void(0)">refresh</a> the page to try again.
+                  We're currently conducting maintenance on our application. Please wait a few moments and
+                  <a onClick="window.location.reload()" href="javascript:void(0)">try again</a>. We apologize for any inconvenience.
 
                   <br /><span
                     id="critical-diagnostic"
@@ -645,14 +643,15 @@
                   ></span>
                 </p>
                 <p>
-                  You can check for any ongoing issues in our
-                  <a href="https://status.viabenefits.com/?utm_source=participant-502" target="_blank" rel="noopener noreferrer"
-                    >Status Center</a
-                  >.
+                  Visit our
+                  <a href="https://status.viabenefits.com/?utm_source=maintenance" target="_blank" rel="noopener noreferrer">
+                    Status Center
+                  </a>
+                  for updates on system availability and estimated recovery times.
                 </p>
                 <p style="font-size: smaller">
                   If the issue continues or you need assistance, contact
-                  <a href="https://help.viabenefits.com/contact/?utm_source=participant-502" target="_blank" rel="noopener noreferrer"
+                  <a href="https://help.viabenefits.com/contact/?utm_source=maintenance" target="_blank" rel="noopener noreferrer"
                     ><span style="white-space: nowrap">Via Benefits Support</span></a
                   >
                   at <span style="white-space: nowrap"><a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)</span>
@@ -876,7 +875,7 @@
                 </script>
               </div>
               <img
-                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
+                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/under-construction.svg"
                 alt="Error in the clouds"
                 class="content-image"
               />
