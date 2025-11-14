@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="bdaim:custom-error-page-id" content="participant-503/standalone" />
+    <meta name="bdaim:custom-error-page-id" content="participant-outage/standalone" />
     <meta name="bdaim:version" content="v1.0.1" />
     <!-- Intentional maintenance -->
 
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       (function () {
         const scope = 'Maintenance/Participant/Standalone';
-        const eventName = scope + '/503 Custom Error Page Outage Shown';
+        const eventName = scope + '/Custom Outage Error Page Shown';
 
         window.contextualData = {};
         const data = window.contextualData;
@@ -27,7 +27,6 @@
 
           const instance = e.detail.instance;
           instance.event(eventName, {
-            statusCode: 503,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -35,7 +34,6 @@
 
           instance.setVars('page', {
             scope: scope,
-            statusCode: 503,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -639,7 +637,7 @@
         <div class="header-inner">
           <div class="logo">
             <a
-              href="https://help.viabenefits.com/?utm_source=participant-503_standalone"
+              href="https://help.viabenefits.com/?utm_source=participant-outage_standalone"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Via Benefits Help & Support"
@@ -667,7 +665,7 @@
                 <p>
                   <strong
                     >We are currently experiencing an
-                    <a href="https://help.viabenefits.com/outages/?utm_source=participant-503_standalone" target="_blank">outage</a></strong
+                    <a href="https://help.viabenefits.com/outages/?utm_source=participant-outage_standalone" target="_blank">outage</a></strong
                   >. The application you are trying to access is temporarily unavailable.
 
                   <br /><span
@@ -678,7 +676,7 @@
                 <p>
                   Check the status of this outage in our
                   <a
-                    href="https://status.viabenefits.com/?utm_source=participant-503_standalone"
+                    href="https://status.viabenefits.com/?utm_source=participant-outage_standalone"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -687,7 +685,7 @@
                 </p>
                 <p style="font-size: smaller">
                   If the issue continues or you need assistance, contact
-                  <a href="https://help.viabenefits.com/contact/?utm_source=participant-503_standalone" target="_blank" rel="noopener noreferrer"
+                  <a href="https://help.viabenefits.com/contact/?utm_source=participant-outage_standalone" target="_blank" rel="noopener noreferrer"
                     ><span style="white-space: nowrap">Via Benefits Support</span></a
                   >
                   at <span style="white-space: nowrap"><a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)</span>

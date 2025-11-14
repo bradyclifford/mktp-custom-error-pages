@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="bdaim:custom-error-page-id" content="participant-503/standalone" />
+    <meta name="bdaim:custom-error-page-id" content="participant-outage/standalone" />
     <meta name="bdaim:version" content="v1.0.1" />
     <!-- Intentional maintenance -->
 
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
 
     <meta name="robots" content="noindex, nofollow" />
-    <link rel="canonical" href="https://help.viabenefits.com/outages/?utm_source=participant-503_standalone" />
+    <link rel="canonical" href="https://help.viabenefits.com/outages/?utm_source=participant-outage_standalone" />
 
     <title>Via Benefits - Outage</title>
 
@@ -20,7 +20,7 @@
     <script type="text/javascript">
       (function () {
         const scope = 'Maintenance/Participant/Standalone';
-        const eventName = scope + '/503 Custom Error Page Outage Shown';
+        const eventName = scope + '/Custom Outage Error Page Shown';
 
         window.contextualData = {};
         const data = window.contextualData;
@@ -30,7 +30,6 @@
 
           const instance = e.detail.instance;
           instance.event(eventName, {
-            statusCode: 503,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -38,7 +37,6 @@
 
           instance.setVars('page', {
             scope: scope,
-            statusCode: 503,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -206,7 +204,7 @@
         font-style: normal;
         font-weight: 300;
         src: url('fonts/SourceSansPro-Light.otf.woff') format('woff');
-        font-display: optional;
+        font-display: fallback;
       }
 
       @font-face {
@@ -214,7 +212,7 @@
         font-style: normal;
         font-weight: 400;
         src: url('fonts/SourceSansPro-Regular.otf.woff') format('woff');
-        font-display: optional;
+        font-display: fallback;
       }
 
       @font-face {
@@ -222,7 +220,7 @@
         font-style: normal;
         font-weight: 600;
         src: url('fonts/SourceSansPro-Semibold.otf.woff') format('woff');
-        font-display: optional;
+        font-display: fallback;
       }
 
       @font-face {
@@ -230,221 +228,100 @@
         font-style: normal;
         font-weight: 700;
         src: url('fonts/SourceSansPro-Bold.otf.woff') format('woff');
-        font-display: optional;
+        font-display: fallback;
       }
 
+      /* Base Styles - Mobile First */
       body {
-        background: url(background.jpg);
-        background-attachment: fixed;
-        background-color: #d9e7dc;
-        background-position: center bottom;
-        background-repeat: no-repeat;
-        background-size: contain;
-        position: relative;
-        color: #444;
-
         box-sizing: border-box;
-        font-family: 'Source Sans Pro', 'Segoe UI', Segoe, Calibri, Tahoma, sans-serif;
-        line-height: 1.428;
         margin: 0;
         min-height: 100%;
         min-width: 360px;
         padding: 20px 0;
-        padding-top: 110px;
+        padding-top: 70px;
+        position: relative;
+        color: #444;
+        font-family: 'Source Sans Pro', 'Segoe UI', Segoe, Calibri, Tahoma, sans-serif;
+        line-height: 1.428;
+        background: none;
       }
 
-      @media (min-width: 900px) {
-        body {
-          padding: 54px 0;
-          padding-top: 140px;
-          padding-bottom: 25px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        body {
-          background: none;
-          padding-top: 70px;
-        }
-      }
-
-      /*HEADER*/
+      /* Header */
       header {
         display: block;
       }
 
-      .gpHNAT {
+      .header-container {
         position: fixed;
-        background-color: #fff;
-        box-sizing: border-box;
+        top: 0;
         right: 0;
         left: 0;
         z-index: 1005;
-        bottom: initial;
-        top: 0;
+        background-color: #fff;
         border-bottom: 4px solid #00a0d2;
+        box-sizing: border-box;
       }
 
-      .dOFsBi {
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
+      .header-inner {
         display: flex;
-        -webkit-box-pack: justify;
-        -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
+        align-items: center;
         justify-content: space-between;
         margin: 0 5px;
       }
 
-      @media (min-width: 768px) {
-        .dOFsBi {
-          height: 85px;
-          margin: 0 10px;
-        }
-      }
-
-      /*LOGO*/
       .logo {
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
         display: flex;
+        align-items: center;
         height: 100%;
         min-height: 74px;
-        -webkit-box-pack: space-around;
-        -webkit-justify-content: space-around;
-        -ms-flex-pack: space-around;
         justify-content: space-around;
         padding: 2px 0;
         margin: auto;
       }
 
-      @media (min-width: 480px) {
-        .logo {
-          margin: unset;
-        }
-      }
-
-      @media (min-width: 768px) {
-        .logo {
-          display: -webkit-box;
-          display: -webkit-flex;
-          display: -ms-flexbox;
-          display: flex;
-          height: auto;
-          min-height: auto;
-          -webkit-box-pack: normal;
-          -webkit-justify-content: normal;
-          -ms-flex-pack: normal;
-          justify-content: normal;
-          margin: unset;
-        }
-      }
-
-      @media (min-width: 480px) {
-        .kiVfhQ {
-          margin: unset;
-          min-width: 120px;
-        }
-      }
-
-      .kiVfhQ {
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
+      .logo-link {
         display: flex;
+        align-items: center;
         height: 30px;
         min-width: 110px;
       }
 
-      .kiVfhQ img {
+      .logo-link img {
         max-height: 100%;
         max-width: 100%;
       }
 
-      .fZxPXu {
-        padding: 25px 30px 30px;
+      /* Main Content */
+      .content-wrapper {
+        display: block;
+      }
+
+      .main-content {
+        background: none;
+      }
+
+      .content-card {
+        box-shadow: none;
+        margin-bottom: 0;
+      }
+
+      .content-top-border {
+        display: none;
+        background-color: rgb(0, 115, 182);
+        height: 20px;
+      }
+
+      .content-body {
+        padding: 15px 30px 30px;
         display: flex;
         position: relative;
         flex-direction: column-reverse;
-        gap: 5px;
+        gap: 20px;
       }
 
-      @media (min-width: 768px) {
-        .fZxPXu {
-          flex-direction: row;
-          padding-top: 55px;
-        }
-      }
-
-      .ficWV {
-        display: block;
-        -webkit-box-pack: center;
-        justify-content: center;
-      }
-
-      .bPdQbX {
-        color: inherit;
-        font-size: 33px;
-        font-weight: 550;
-        line-height: 1.1;
-        margin: 0;
-        padding-bottom: 15px;
-      }
-
-      @media (min-width: 480px) {
-        .bPdQbX {
-          font-size: 37px;
-        }
-      }
-
-      @media (min-width: 768px) {
-        .bPdQbX {
-          padding-bottom: 20px;
-        }
-      }
-
-      .gsvxjx {
-        margin: 0;
-      }
-
-      .gsvxjx p {
-        font-size: 18px;
-        margin: 0;
-        padding-right: 15px;
-        padding-bottom: 20px;
-        text-wrap: pretty;
-      }
-
-      @media (min-width: 480px) {
-        .gsvxjx p {
-          padding-right: unset;
-        }
-      }
-
-      @media (min-width: 768px) {
-        .gsvxjx p {
-          width: 80%;
-          padding-bottom: 30px;
-        }
-      }
-
-      .kWdWjz {
+      .content-background {
         position: absolute;
-        left: 0px;
+        left: 0;
         top: 0;
         width: 100%;
         height: 100%;
@@ -453,34 +330,7 @@
         overflow: hidden;
       }
 
-      .eMpMeg {
-        box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 5px 2px;
-        margin-bottom: 25px;
-      }
-
-      @media (max-width: 480px) {
-        .eMpMeg {
-          box-shadow: none;
-          margin-bottom: unset;
-        }
-      }
-
-      #main-content {
-        background: none;
-      }
-
-      .top-border {
-        background-color: rgb(0, 115, 182);
-        height: 20px;
-      }
-
-      @media (max-width: 480px) {
-        .top-border {
-          display: none;
-        }
-      }
-
-      .dHjbSE {
+      .content-background-image {
         display: none;
         position: absolute;
         right: 113px;
@@ -491,23 +341,106 @@
         height: auto;
       }
 
-      @media (min-width: 768px) {
-        .dHjbSE {
-          display: unset;
+      .content-text {
+        margin: 0;
+      }
+
+      .content-title {
+        color: inherit;
+        font-size: 33px;
+        font-weight: 550;
+        line-height: 1.1;
+        margin: 0;
+        padding-bottom: 15px;
+      }
+
+      .content-text p {
+        font-size: 18px;
+        margin: 0;
+        padding-right: 15px;
+        padding-bottom: 20px;
+        text-wrap: pretty;
+      }
+
+      @media (min-width: 480px) {
+        .content-text p {
+          padding-right: 0;
+        }
+
+        .content-title {
+          font-size: 37px;
         }
       }
 
-      .gtZfrz {
+      .content-image {
         width: 40%;
         margin: auto;
       }
 
-      @media (min-width: 768px) {
-        .gtZfrz {
-          width: 40%;
-        }
+      .container {
+        box-sizing: border-box;
+        min-width: 360px;
       }
 
+      /* Footer */
+      .footer-container {
+        background: transparent;
+        padding-bottom: 25px;
+      }
+
+      .footer-content {
+        background-color: #fff;
+        border-top: 2px solid #c110a0;
+        box-shadow: none;
+        margin-bottom: 0;
+        color: #000;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 85%;
+        font-weight: 400;
+        justify-content: space-between;
+        padding: 10px;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .footer-link-item {
+        margin-bottom: 5px;
+        padding-right: 5px;
+        text-align: left;
+      }
+
+      .footer-link-item a {
+        color: inherit;
+        text-decoration: none;
+        padding-left: 4px;
+      }
+
+      .footer-link-item button {
+        background: none;
+        border: 0;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        padding: 0;
+        text-align: inherit;
+        margin: 0;
+        padding-left: 4px;
+      }
+
+      .footer-copyright {
+        align-self: baseline;
+        text-align: right;
+        padding-left: 4px;
+      }
+
+      /* Diagnostic Styles */
       i.copy-icon {
         display: inline-block;
         width: 13px;
@@ -516,16 +449,15 @@
         font-weight: 400;
         line-height: 13px;
         cursor: copy;
-        transition: all;
         caret-color: rgb(249, 236, 217);
         color-scheme: dark;
         font-synthesis: weight style small-caps;
-        webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.18);
       }
 
       .diagnostic-container {
         display: grid;
-        grid-template-columns: minmax(20px, auto) 1fr;
+        grid-template-columns: 1fr;
         gap: 10px;
         list-style-type: none;
         padding: 15px;
@@ -546,140 +478,110 @@
         text-align: left;
       }
 
-      @media (max-width: 480px) {
-        .diagnostic-container {
-          grid-template-columns: unset;
-        }
-      }
-
-      /*FOOTER*/
-      .iIgDPG {
-        background: transparent;
-        padding-bottom: 25px;
-      }
-
-      .iIgDPG > .sc-dwVMhp:not(:last-child) {
-        margin-bottom: 25px;
-      }
-
-      .hGVbps {
-        background-color: #fff;
-        border-top: 2px solid #c110a0;
-        box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.3);
-        color: #000;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        font-size: 85%;
-        font-weight: 400;
-        -webkit-box-pack: justify;
-        -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        padding: 10px;
-      }
-
-      .lfEQId {
-        box-sizing: border-box;
-        min-width: 360px;
-      }
-
-      .hCaFHM {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .RMAsu {
-        margin-bottom: 5px;
-        padding-right: 5px;
-        text-align: left;
-      }
-
-      .RMAsu a {
-        color: inherit;
-        -webkit-text-decoration: none;
-        text-decoration: none;
-        padding-left: 4px;
-      }
-
-      .RMAsu button {
-        background: none;
-        border: 0;
-        color: inherit;
-        cursor: pointer;
-        font: inherit;
-        padding: 0;
-        text-align: inherit;
-        margin: 0;
-        padding-left: 4px;
-      }
-
-      .ivsyaY {
-        -webkit-align-self: baseline;
-        -ms-flex-item-align: baseline;
-        align-self: baseline;
-        text-align: right;
-      }
-
+      /* Tablet Styles (768px and up) */
       @media (min-width: 768px) {
-        .hGVbps {
+        body {
+          background: url(background.jpg);
+          background-attachment: fixed;
+          background-color: #d9e7dc;
+          background-position: center bottom;
+          background-repeat: no-repeat;
+          background-size: contain;
+          padding-top: 110px;
+        }
+
+        .header-inner {
+          height: 85px;
+          margin: 0 10px;
+        }
+
+        .logo {
+          height: auto;
+          min-height: auto;
+          justify-content: normal;
+          margin: 0;
+        }
+
+        .logo-link {
+          margin: 0;
+          min-width: 120px;
+        }
+
+        .content-body {
+          flex-direction: row;
+          padding-top: 55px;
+        }
+
+        .content-background-image {
+          display: block;
+        }
+
+        .content-title {
+          padding-bottom: 20px;
+        }
+
+        .content-text p {
+          width: 80%;
+          padding-bottom: 30px;
+        }
+
+        .content-image {
+          width: 40%;
+        }
+
+        .content-card {
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 5px 2px;
+          margin-bottom: 25px;
+        }
+
+        .content-top-border {
+          display: block;
+        }
+
+        .footer-content {
+          box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.3);
           padding: 20px;
         }
-      }
 
-      @media (max-width: 480px) {
-        .hGVbps {
-          box-shadow: none;
-          margin-bottom: unset;
-        }
-
-        .ivsyaY {
-          padding-left: 4px;
+        .diagnostic-container {
+          grid-template-columns: minmax(20px, auto) 1fr;
         }
       }
 
+      /* Desktop Styles (900px and up) */
       @media (min-width: 900px) {
-        .lfEQId {
+        body {
+          padding: 54px 0;
+          padding-top: 140px;
+          padding-bottom: 25px;
+        }
+
+        .container {
           margin-left: auto;
           margin-right: auto;
           width: 900px;
         }
 
-        .hCaFHM {
-          -webkit-flex-direction: row;
-          -ms-flex-direction: row;
+        .footer-links {
           flex-direction: row;
         }
 
-        .RMAsu:not(:last-child) {
+        .footer-link-item:not(:last-child) {
           border-right: 1px solid #919191;
         }
 
-        .RMAsu {
-          margin-bottom: initial;
+        .footer-link-item {
+          margin-bottom: 0;
         }
 
-        .ivsyaY {
-          text-align: initial;
+        .footer-copyright {
+          text-align: left;
         }
       }
 
+      /* Large Desktop Styles (1200px and up) */
       @media (min-width: 1200px) {
-        .lfEQId {
-          margin-right: auto;
-          margin-left: auto;
+        .container {
           width: 1200px;
         }
       }
@@ -733,16 +635,16 @@
   </head>
 
   <body class="fs-unmask">
-    <header class="sc-gILORG gpHNAT sc-eVBRet imebRT" data-hidden="false" data-piece-id="header">
-      <div class="sc-dwVMhp lfEQId">
-        <div class="dOFsBi">
+    <header class="header-container" data-hidden="false" data-piece-id="header">
+      <div class="container">
+        <div class="header-inner">
           <div class="logo">
             <a
-              href="https://help.viabenefits.com/?utm_source=participant-503_standalone"
-              aria-label="Via Benefits Help & Support"
+              href="https://help.viabenefits.com/?utm_source=participant-outage_standalone"
               target="_blank"
               rel="noopener noreferrer"
-              class="kiVfhQ"
+              aria-label="Via Benefits Help & Support"
+              class="logo-link"
             >
               <img src="via-benefits-logo.png" alt="Via Benefits logo" />
             </a>
@@ -751,22 +653,22 @@
       </div>
     </header>
 
-    <div class="ficWV">
+    <div class="content-wrapper">
       <div id="error-app">
         <div>
-          <div id="main-content" role="main" class="sc-dwVMhp lfEQId sc-hbjaKc eMpMeg">
-            <div class="top-border">&nbsp;</div>
+          <div id="main-content" role="main" class="container main-content content-card">
+            <div class="content-top-border">&nbsp;</div>
 
-            <div class="fZxPXu">
-              <div class="kWdWjz">
-                <img src="error-cloud.svg" class="gtZfrz dHjbSE" />
+            <div class="content-body">
+              <div class="content-background">
+                <img src="error-cloud.svg" class="content-image content-background-image" />
               </div>
-              <div class="gsvxjx">
-                <h1 class="bPdQbX">Outage</h1>
+              <div class="content-text">
+                <h1 class="content-title">Outage</h1>
                 <p>
                   <strong
                     >We are currently experiencing an
-                    <a href="https://help.viabenefits.com/outages/?utm_source=participant-503_standalone" target="_blank">outage</a></strong
+                    <a href="https://help.viabenefits.com/outages/?utm_source=participant-outage_standalone" target="_blank">outage</a></strong
                   >. The application you are trying to access is temporarily unavailable.
 
                   <br /><span
@@ -777,7 +679,7 @@
                 <p>
                   Check the status of this outage in our
                   <a
-                    href="https://status.viabenefits.com/?utm_source=maintenance-page_standalone"
+                    href="https://status.viabenefits.com/?utm_source=participant-outage_standalone"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -786,7 +688,7 @@
                 </p>
                 <p style="font-size: smaller">
                   If the issue continues or you need assistance, contact
-                  <a href="https://help.viabenefits.com/contact/?utm_source=under-maintenance" target="_blank" rel="noopener noreferrer"
+                  <a href="https://help.viabenefits.com/contact/?utm_source=participant-outage_standalone" target="_blank" rel="noopener noreferrer"
                     ><span style="white-space: nowrap">Via Benefits Support</span></a
                   >
                   at <span style="white-space: nowrap"><a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)</span>
@@ -799,7 +701,9 @@
                   >.
                 </p>
                 <div id="diagnostics" style="font-size: small; display: none">
-                  <details>
+                  <details
+                    ontoggle="if(this.open) { try { this.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e) { this.scrollIntoView(); } }"
+                  >
                     <summary>Additional Diagnostic Details</summary>
                     Please provide these details when contacting support to resolve the issue.
                     <div style="margin-top: 10px">
@@ -1007,30 +911,30 @@
                   }
                 </script>
               </div>
-              <img src="error-cloud.svg" alt="Error in the clouds" class="gtZfrz" />
+              <img src="error-cloud.svg" alt="Error in the clouds" class="content-image" />
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <footer class="sc-hbyLVd iIgDPG sc-cgFpzT jlUbBR">
-      <div class="sc-dwVMhp sc-oclUV lfEQId hGVbps">
-        <ul class="sc-cQwIYT hCaFHM">
-          <li class="sc-knuRna RMAsu">
+    <footer class="footer-container">
+      <div class="container footer-content">
+        <ul class="footer-links">
+          <li class="footer-link-item">
             <a href="https://viabenefits.com/about/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
           </li>
-          <li class="sc-knuRna RMAsu">
+          <li class="footer-link-item">
             <a href="https://viabenefits.com/about/licensing-legal/" target="_blank" rel="noopener noreferrer">Licensing &amp; Legal</a>
           </li>
-          <li class="sc-knuRna RMAsu">
+          <li class="footer-link-item">
             <a href="https://viabenefits.com/about/" target="_blank" rel="noopener noreferrer">About Us</a>
           </li>
-          <li class="sc-knuRna RMAsu">
+          <li class="footer-link-item">
             <a href="https://help.viabenefits.com/contact/" target="_blank" rel="noopener noreferrer">Contact Us</a>
           </li>
         </ul>
-        <div class="sc-hLaujc ivsyaY">
+        <div class="footer-copyright">
           Copyright Ⓒ&nbsp;
           <span id="currentYear"></span>
           <script>
