@@ -1,23 +1,22 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="bdaim:custom-error-page-id" content="participant-502" />
+    <meta name="bdaim:custom-error-page-id" content="internal-403" />
     <meta name="bdaim:version" content="v1.1.0" />
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width" />
 
-    <title>Via Benefits - Unavailable</title>
+    <title>WTW - Restricted</title>
 
-    <!-- Default Participant Template for all others -->
     <!-- Keep assets referencing the CDN path -->
 
     <!-- Track Data -->
     <script type="text/javascript">
       (function () {
-        const scope = 'Maintenance/Participant';
-        const eventName = scope + '/502 Custom Error Page Shown';
+        const scope = 'Maintenance/Internal';
+        const eventName = scope + '/403 Custom Error Page Shown';
 
         window.contextualData = {};
         const data = window.contextualData;
@@ -27,7 +26,7 @@
 
           const instance = e.detail.instance;
           instance.event(eventName, {
-            statusCode: 502,
+            statusCode: 403,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -35,7 +34,7 @@
 
           instance.setVars('page', {
             scope: scope,
-            statusCode: 502,
+            statusCode: 403,
             url: window.location.href,
             host: window.location.host,
             path: window.location.pathname
@@ -173,12 +172,7 @@
     <link rel="stylesheet" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/icons.css" />
     <link rel="shortcut icon" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/favicon.ico" />
 
-    <link rel="preload" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png" as="image" />
-    <link rel="preload" href="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/backgrounds/3.jpg" as="image" />
-
-    <link rel="preconnect" href="https://viabenefits.com/" />
-    <link rel="preconnect" href="https://help.viabenefits.com/" />
-    <link rel="preconnect" href="https://help.viabenefits.com/contact/" />
+    <link rel="preload" href="https://media.wtwco.com/-/media/WTW/Logo/Logo_Desktop.svg" as="image" />
 
     <style type="text/css">
       /* Base Styles - Mobile First */
@@ -372,7 +366,6 @@
         padding-left: 4px;
       }
 
-
       .footer-copyright {
         align-self: baseline;
         text-align: right;
@@ -524,6 +517,64 @@
           width: 1200px;
         }
       }
+
+      /* Button Container - Links styled as buttons (Mobile First) */
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .button-container .button-link {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #00a0d2;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s;
+        white-space: nowrap;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+      }
+
+      .button-container .button-link:hover {
+        background-color: #0088b3;
+        text-decoration: none;
+      }
+
+      .button-container .button-link:active {
+        background-color: #006d8f;
+      }
+
+      .button-container .button-link:visited {
+        color: #fff;
+      }
+
+      /* Horizontal layout for larger screens */
+      @media (min-width: 601px) {
+        .button-container {
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: flex-start;
+        }
+
+        .button-container .button-link {
+          width: auto;
+          max-width: none;
+          flex-shrink: 0;
+        }
+      }
     </style>
 
     <!-- FullStory -->
@@ -595,8 +646,8 @@
       <div class="container">
         <div class="header-inner">
           <div class="logo">
-            <a href="/" aria-label="Via Benefits homepage" class="logo-link">
-              <img src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png" alt="Via Benefits logo" />
+            <a href="/" aria-label="Homepage" class="logo-link">
+              <img src="https://media.wtwco.com/-/media/WTW/Logo/Logo_Desktop.svg" alt="WTW logo" />
             </a>
           </div>
         </div>
@@ -612,47 +663,40 @@
             <div class="content-body">
               <div class="content-background">
                 <img
-                  src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
+                  src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg"
                   class="content-image content-background-image"
                 />
               </div>
               <div class="content-text">
-                <h1 class="content-title">Page Unavailable</h1>
+                <h1 class="content-title">This Site Is Blocked</h1>
                 <p>
-                  The page you attempted to reach is currently unavailable. Please wait a few moments, then
-                  <a onClick="window.location.reload()" href="javascript:void(0)">refresh</a> the page to try again.
+                  The site you're trying to reach is blocked due to security concerns with your web browser's history. You can clear your
+                  browser's
+                  <a href="https://support.google.com/accounts/answer/32050" target="_blank" rel="noopener noreferrer"
+                    >cache and third-party cookies</a
+                  >, then <a onClick="window.location.reload()" href="javascript:void(0)">try again</a>.
+                  <em>Note: browser extension add-ons can produce these security concerns.</em>
 
                   <br /><span
                     id="critical-diagnostic"
                     style="color: #d0d4d8; font-size: 0.7em; word-break: break-word; margin-top: 5px; display: none"
                   ></span>
                 </p>
-                <p>
-                  You can check for any ongoing issues in our
-                  <a href="https://status.viabenefits.com/?utm_source=participant-502" target="_blank" rel="noopener noreferrer"
-                    >Status Center</a
-                  >.
-                </p>
-                <p style="font-size: smaller">
-                  If the issue continues or you need assistance, contact
-                  <a href="https://help.viabenefits.com/contact/?utm_source=participant-502" target="_blank" rel="noopener noreferrer"
-                    ><span style="white-space: nowrap">Via Benefits Support</span></a
+                <p class="button-container">
+                  <a href="https://techhub.mktp.io/url-lookup" target="_blank" rel="noopener noreferrer" class="button-link"
+                    >Lookup Owning team</a
                   >
-                  at <span style="white-space: nowrap"><a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)</span>
-                  or
-                  <a
-                    href="https://vue.comm100.com/chatwindow.aspx?siteId=10002849&planId=23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >live chat</a
-                  >.
+                  <a href="https://status.mktp.io/?utm_source=internal-403" target="_blank" rel="noopener noreferrer" class="button-link"
+                    >Private Status Center</a
+                  >
+                  <a href="javascript:void(0)" onclick="handleJiraBugCreation()" class="button-link">Create Jira Bug</a>
                 </p>
                 <div id="diagnostics" style="font-size: small; display: none">
                   <details
                     ontoggle="if(this.open) { try { this.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch(e) { this.scrollIntoView(); } }"
                   >
                     <summary>Additional Diagnostic Details</summary>
-                    Please provide these details when contacting support to resolve the issue.
+                    Include these details when attempting to resolve the issue with support.
                     <div style="margin-top: 10px">
                       <em>
                         <a href="javascript:void(0)" onClick="copyToClipboard(getDiagnosticsAsText())" style="cursor: copy">Click here</a>
@@ -862,11 +906,73 @@
                   } catch (error) {
                     console.error('Error populating diagnostics:', error);
                   }
+
+                  function getJiraDescription() {
+                    const fullStoryLink = diagnostics.fullStoryLink || 'https://app.fullstory.com/ssodomain/wtwco.com';
+                    return `{panel:title=Session Details}
+* [FullStory Recording Link|${fullStoryLink}]
+* *URL*: ${window.location.href}
+* *Trace ID*: ${
+                      diagnostics.appInsightsTraceId ||
+                      `get from [FullStory recording|${fullStoryLink}] using [headers|https://im-kb.internal.towerswatson.com/x/fu1dOw]`
+                    }
+* *Timestamp of Occurrence*: ${new Date().toLocaleString('en-US', {
+                      timeZoneName: 'short'
+                    })}
+
+(i) See [System Information Guide|https://im-kb.internal.towerswatson.com/x/drt0Qg] for additional details
+
+h6. Detailed Diagnostics
+{noformat}
+${getDiagnosticsAsText()}
+{noformat}
+
+{panel}
+...
+`;
+                  }
+
+                  function getJiraBugCreationUrl() {
+                    const { participantId, householdId, agentId, isAgent } = diagnostics;
+
+                    const today = new Date();
+                    const day = today.getDate();
+                    const month = today.toLocaleString('en-US', { month: 'short' });
+                    const year = today.getFullYear().toString().slice(-2); // Last two digits of the year (e.g., "24")
+                    const occurrenceDate = `${day}/${month}/${year}`;
+
+                    const baseJiraCreationUrl = 'http://im-jira.internal.towerswatson.com/secure/CreateIssueDetails!init.jspa';
+
+                    return new URL(
+                      `${baseJiraCreationUrl}?${new URLSearchParams(
+                        Object.fromEntries(
+                          Object.entries({
+                            pid: 11000, // Bug Project
+                            issuetype: 1, // Bug
+                            labels: 'software-info-include',
+                            customfield_14489: occurrenceDate,
+                            summary: `Website issue on ${window.location.hostname}${window.location.pathname}`,
+                            customfield_13940: window.location.hostname,
+                            customfield_10618: participantId
+                              ? `${isAgent ? `agent (${agentId})` : 'participant'}: ${participantId}/${householdId}`
+                              : '',
+                            description: getJiraDescription() // Actual Result
+                          }).filter(([, value]) => value !== undefined && value !== null)
+                        )
+                      ).toString()}`
+                    );
+                  }
+
+                  function handleJiraBugCreation() {
+                    const bugCreationUrl = getJiraBugCreationUrl();
+                    window.open(bugCreationUrl, '_blank');
+                    console.info('Jira Bug Creation window opened', { url: bugCreationUrl });
+                  }
                 </script>
               </div>
               <img
-                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/error-cloud.svg"
-                alt="Error in the clouds"
+                src="https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg"
+                alt="Warning shield"
                 class="content-image"
               />
             </div>
@@ -879,16 +985,18 @@
       <div class="container footer-content">
         <ul class="footer-links">
           <li class="footer-link-item">
-            <a href="https://viabenefits.com/about/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            <a
+              href="https://teams.microsoft.com/l/channel/19%3Abecd7abf7a6c4b9f83e85549c501112e%40thread.tacv2/Individual%20Marketplace%20-%20Incident%20Response%C2%A0?groupId=a25b5175-24ca-492d-9285-14bfde85f729&tenantId=76e3921f-489b-4b7e-9547-9ea297add9b5"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Incident Response Channel</a
+            >
           </li>
           <li class="footer-link-item">
-            <a href="https://viabenefits.com/about/licensing-legal/" target="_blank" rel="noopener noreferrer">Licensing &amp; Legal</a>
+            <a href="https://im-kb.internal.towerswatson.com/x/w-TFPQ" target="_blank" rel="noopener noreferrer">Incident Severity</a>
           </li>
           <li class="footer-link-item">
-            <a href="https://viabenefits.com/about/" target="_blank" rel="noopener noreferrer">About Us</a>
-          </li>
-          <li class="footer-link-item">
-            <a href="https://help.viabenefits.com/contact/" target="_blank" rel="noopener noreferrer">Contact Us</a>
+            <a href="https://status.viabenefits.com/" target="_blank" rel="noopener noreferrer">Public Status Center</a>
           </li>
         </ul>
         <div class="footer-copyright">
