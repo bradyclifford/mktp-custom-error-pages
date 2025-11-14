@@ -115,24 +115,6 @@
             }
           }
         });
-
-        window.addEventListener('comm100Ready', function (e) {
-          const instance = e.detail.instance;
-
-          if (window.__bdaim.isAppInsightsLoaded && appInsights && appInsights.context) {
-            console.info('Adding AppInsights and FullStory telemetry to Comm100...');
-
-            instance.set('livechat.customVariables', [
-              { name: 'scope', value: eventName },
-              { name: 'fullStorySessionUrl', value: e.detail.sessionUrlAtTime },
-              { name: 'fullStorySession', value: e.detail.sessionId },
-              {
-                name: 'traceId',
-                value: appInsights.getTraceCtx() && appInsights.getTraceCtx().getTraceId()
-              }
-            ]);
-          }
-        });
       })();
     </script>
 
