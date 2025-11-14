@@ -1,59 +1,242 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta name="bdaim:custom-error-page-id" content="app-service-participant-403" />
-    <meta name="bdaim:version" content="v1.1.0" />
+<head>
+  <meta name="bdaim:custom-error-page-id" content="app-service-participant-403" />
+  <meta name="bdaim:version" content="v1.1.0" />
 
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width" />
 
-    <title>Via Benefits - Unavailable</title>
+  <title>Via Benefits - Unavailable</title>
 
-    <!-- Must be 10kb or less and no non-ASCII characters -->
+  <!-- Must be 10kb or less and no non-ASCII characters -->
 
-    <script>
-      !(function () {
-        var scope = 'Maintenance/Participant/AppService';
-        var eventName = scope + '/403 Custom Error Page Shown';
+  <!-- Track Data -->
+  <script type="text/javascript">
+    !(function () {
+      const scope = 'Maintenance/Participant/AppService';
+      const eventName = scope + '/403 Custom Error Page Shown';
 
-        window.contextualData = {};
-        window.addEventListener('fullStoryReady', function (e) {
-          var instance = e.detail.instance;
+      window.contextualData = {};
+      window.addEventListener('fullStoryReady', function (e) {
+        const instance = e.detail.instance;
 
-          instance.event(eventName, {
-            statusCode: 403,
-            url: window.location.href,
-            host: window.location.host,
-            path: window.location.pathname
-          });
-
-          instance.setVars('page', {
-            scope: scope,
-            statusCode: 403,
-            url: window.location.href,
-            host: window.location.host,
-            path: window.location.pathname
-          });
-
-          var diagnostics = document.getElementById('diagnostics');
-          if (diagnostics && e.detail.sessionId) {
-            diagnostics.innerHTML = `<strong>Session</strong>: <a href="${e.detail.sessionUrlAtTime}" target="_blank" rel="noopener noreferrer">${e.detail.sessionId}</a>`;
-            diagnostics.style.display = 'block';
-          }
+        instance.event(eventName, {
+          statusCode: 403,
+          url: window.location.href,
+          host: window.location.host,
+          path: window.location.pathname
         });
-      })();
-    </script>
 
-    <link rel="stylesheet" href="/static/cdn/es-assets/source-sans-pro.css" />
-    <link rel="shortcut icon" href="/static/cdn/es-assets/images/favicon.ico" />
-    <link rel="preload" href="/static/cdn/es-assets/images/via-benefits-logo.png" as="image" />
-    <link rel="preload" href="/static/cdn/es-assets/images/backgrounds/3.jpg" as="image" />
+        instance.setVars('page', {
+          scope: scope,
+          statusCode: 403,
+          url: window.location.href,
+          host: window.location.host,
+          path: window.location.pathname
+        });
 
-    <link rel="preconnect" href="https://viabenefits.com/" />
-    <link rel="preconnect" href="/about/contact/" />
+        const diagnostics = document.getElementById('diagnostics');
+        if (diagnostics && e.detail.sessionId) {
+          diagnostics.innerHTML = `<strong>Session</strong>: <a href="${e.detail.sessionUrlAtTime}" target="_blank" rel="noopener noreferrer">${e.detail.sessionId}</a>`;
+          diagnostics.style.display = 'block';
+        }
+      });
+    })();
+  </script>
 
-    <style type="text/css">
+  <link rel="stylesheet" href="/static/cdn/es-assets/source-sans-pro.css" />
+  <link rel="shortcut icon" href="/static/cdn/es-assets/images/favicon.ico" />
+  <link rel="preload" href="/static/cdn/es-assets/images/via-benefits-logo.png" as="image" />
+  <link rel="preload" href="/static/cdn/es-assets/images/backgrounds/3.jpg" as="image" />
+
+  <link rel="preconnect" href="https://viabenefits.com/" />
+  <link rel="preconnect" href="https://help.viabenefits.com/" />
+  <link rel="preconnect" href="https://help.viabenefits.com/contact/" />
+
+  <style type="text/css">
+    /* Base Styles - Mobile First */
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      min-height: 100%;
+      min-width: 360px;
+      padding: 20px 0;
+      padding-top: 70px;
+      position: relative;
+      color: #444;
+      font-family: 'Source Sans Pro', 'Segoe UI', Segoe, Calibri, Tahoma, sans-serif;
+      line-height: 1.428;
+      background: none;
+    }
+
+    /* Header */
+    header {
+      display: block;
+    }
+
+    .header-container {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1005;
+      background-color: #fff;
+      border-bottom: 4px solid #00a0d2;
+      box-sizing: border-box;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 5px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      min-height: 74px;
+      justify-content: space-around;
+      padding: 2px 0;
+      margin: auto;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      height: 30px;
+      min-width: 110px;
+    }
+
+    .logo-link img {
+      max-height: 100%;
+      max-width: 100%;
+    }
+
+    /* Main Content */
+    .content-wrapper {
+      display: block;
+    }
+
+    .main-content {
+      background: none;
+    }
+
+    .content-card {
+      box-shadow: none;
+      margin-bottom: 0;
+    }
+
+    .content-top-border {
+      display: none;
+      background-color: rgb(0, 115, 182);
+      height: 20px;
+    }
+
+    .content-body {
+      padding: 15px 30px 30px;
+      display: flex;
+      position: relative;
+      flex-direction: column-reverse;
+      gap: 20px;
+    }
+
+    .content-background {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: rgb(255, 255, 255);
+      overflow: hidden;
+    }
+
+    .content-background-image {
+      display: none;
+      position: absolute;
+      right: 113px;
+      top: 68px;
+      transform: scale(1.7, 1.7) rotate(13deg);
+      opacity: 0.1;
+      width: 71%;
+      height: auto;
+    }
+
+    .content-text {
+      margin: 0;
+    }
+
+    .content-title {
+      color: inherit;
+      font-size: 33px;
+      font-weight: 550;
+      line-height: 1.1;
+      margin: 0;
+      padding-bottom: 15px;
+    }
+
+    .content-text p {
+      font-size: 18px;
+      margin: 0;
+      padding-right: 15px;
+      padding-bottom: 20px;
+      text-wrap: pretty;
+    }
+
+    @media (min-width: 480px) {
+      .content-text p {
+        padding-right: 0;
+      }
+
+      .content-title {
+        font-size: 37px;
+      }
+    }
+
+    .content-image {
+      width: 40%;
+      margin: auto;
+    }
+
+    .container {
+      box-sizing: border-box;
+      min-width: 360px;
+    }
+
+    /* Footer */
+    .footer-container {
+      background: transparent;
+      padding-bottom: 25px;
+    }
+
+    .footer-content {
+      background-color: #fff;
+      border-top: 2px solid #c110a0;
+      box-shadow: none;
+      margin-bottom: 0;
+      color: #000;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 85%;
+      font-weight: 400;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+
+    .footer-copyright {
+      align-self: baseline;
+      text-align: right;
+      padding-left: 4px;
+    }
+
+
+    /* Tablet Styles (768px and up) */
+    @media (min-width: 768px) {
       body {
         background: url(/static/cdn/es-assets/images/backgrounds/3.jpg);
         background-attachment: fixed;
@@ -61,376 +244,179 @@
         background-position: center bottom;
         background-repeat: no-repeat;
         background-size: contain;
-        position: relative;
-        color: #444;
-        box-sizing: border-box;
-        font-family: 'Source Sans Pro', 'Segoe UI', Segoe, Calibri, Tahoma, sans-serif;
-        line-height: 1.428;
-        margin: 0;
-        min-height: 100%;
-        min-width: 360px;
-        padding: 20px 0;
         padding-top: 110px;
       }
 
-      @media (min-width: 900px) {
-        body {
-          padding: 54px 0;
-          padding-top: 140px;
-          padding-bottom: 25px;
-        }
-      }
-
-      header {
-        display: block;
-      }
-
-      .gpHNAT {
-        position: fixed;
-        background-color: #fff;
-        box-sizing: border-box;
-        right: 0;
-        left: 0;
-        z-index: 1005;
-        bottom: initial;
-        top: 0;
-        border-bottom: 4px solid #00a0d2;
-      }
-
-      .dOFsBi {
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-pack: justify;
-        -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        margin: 0 5px;
-      }
-
-      @media (min-width: 768px) {
-        .dOFsBi {
-          height: 85px;
-          margin: 0 10px;
-        }
+      .header-inner {
+        height: 85px;
+        margin: 0 10px;
       }
 
       .logo {
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        height: 100%;
-        min-height: 74px;
-        -webkit-box-pack: space-around;
-        -webkit-justify-content: space-around;
-        -ms-flex-pack: space-around;
-        justify-content: space-around;
-        padding: 2px 0;
-        margin: auto;
+        height: auto;
+        min-height: auto;
+        justify-content: normal;
+        margin: 0;
       }
 
-      @media (min-width: 480px) {
-        .logo {
-          margin: unset;
-        }
+      .logo-link {
+        margin: 0;
+        min-width: 120px;
       }
 
-      @media (min-width: 768px) {
-        .logo {
-          display: -webkit-box;
-          display: -webkit-flex;
-          display: -ms-flexbox;
-          display: flex;
-          height: auto;
-          min-height: auto;
-          -webkit-box-pack: normal;
-          -webkit-justify-content: normal;
-          -ms-flex-pack: normal;
-          justify-content: normal;
-          margin: unset;
-        }
+      .content-body {
+        flex-direction: row;
+        padding-top: 55px;
       }
 
-      @media (min-width: 480px) {
-        .kiVfhQ {
-          margin: unset;
-          min-width: 120px;
-        }
-      }
-
-      .logo-container {
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        height: 30px;
-        min-width: 110px;
-      }
-
-      .ogo-container img {
-        max-height: 100%;
-        max-width: 100%;
-      }
-
-      .fZxPXu {
-        padding: 30px;
-        padding-top: 25px;
-        padding-bottom: 10px;
-        display: flex;
-        position: relative;
-        flex-direction: column-reverse;
-        gap: 30px;
-      }
-
-      @media (min-width: 768px) {
-        .fZxPXu {
-          flex-direction: row;
-          padding-top: 55px;
-          padding-bottom: 30px;
-        }
-      }
-
-      .container {
+      .content-background-image {
         display: block;
-        -webkit-box-pack: center;
-        justify-content: center;
       }
 
-      .title {
-        color: inherit;
-        font-size: 33px;
-        font-weight: 550;
-        line-height: 1.1;
-        margin: 0px;
-        padding-bottom: 15px;
-      }
-
-      @media (min-width: 480px) {
-        .bPdQbX {
-          font-size: 37px;
-        }
-      }
-
-      @media (min-width: 768px) {
-        .bPdQbX {
-          padding-bottom: 20px;
-        }
-      }
-
-      .gsvxjx {
-        margin: 0px;
-      }
-
-      .gsvxjx p {
-        font-size: 18px;
-        margin: 0px;
-        padding-right: 15px;
+      .content-title {
         padding-bottom: 20px;
-        text-wrap: balance;
       }
 
-      @media (min-width: 480px) {
-        .gsvxjx p {
-          padding-right: unset;
-        }
+      .content-text p {
+        width: 80%;
+        padding-bottom: 30px;
       }
 
-      @media (min-width: 768px) {
-        .gsvxjx p {
-          width: 80%;
-          padding-bottom: 30px;
-        }
+      .content-image {
+        width: 40%;
       }
 
-      .large-badge-icon {
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: rgb(255, 255, 255);
-        overflow: hidden;
-      }
-
-      .eMpMeg {
+      .content-card {
         box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 5px 2px;
         margin-bottom: 25px;
       }
 
-      #main-content {
-        background: none;
+      .content-top-border {
+        display: block;
       }
 
-      .top-border {
-        background-color: rgb(0, 115, 182);
-        height: 20px;
+      .footer-content {
+        box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.3);
+        padding: 20px;
       }
+    }
 
-      .dHjbSE {
-        display: none;
-        position: absolute;
-        right: 113px;
-        top: 68px;
-        transform: scale(1.7, 1.7) rotate(13deg);
-        opacity: 0.1;
-        width: 71%;
-        height: auto;
-      }
-
-      @media (min-width: 768px) {
-        .dHjbSE {
-          display: unset;
-        }
-      }
-
-      .gtZfrz {
-        width: 60%;
-        margin: auto;
-      }
-
-      @media (min-width: 768px) {
-        .gtZfrz {
-          width: 40%;
-        }
-      }
-
-      .iIgDPG {
-        background: transparent;
+    /* Desktop Styles (900px and up) */
+    @media (min-width: 900px) {
+      body {
+        padding: 54px 0;
+        padding-top: 140px;
         padding-bottom: 25px;
       }
 
-      .iIgDPG > .sc-dwVMhp:not(:last-child) {
-        margin-bottom: 25px;
+      .container {
+        margin-left: auto;
+        margin-right: auto;
+        width: 900px;
       }
 
-      .copyright-container {
-        background-color: #fff;
-        border-top: 2px solid #c110a0;
-        box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.3);
-        color: #000;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        font-size: 85%;
-        font-weight: 400;
-        -webkit-box-pack: justify;
-        -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        min-height: 115px;
-        padding: 10px;
-      }
 
-      .lfEQId {
-        box-sizing: border-box;
-        min-width: 360px;
+      .footer-copyright {
+        text-align: left;
       }
+    }
 
-      @media (min-width: 768px) {
-        .copyright-container {
-          padding: 20px;
-        }
+    /* Large Desktop Styles (1200px and up) */
+    @media (min-width: 1200px) {
+      .container {
+        width: 1200px;
       }
+    }
+  </style>
 
-      @media (min-width: 900px) {
-        .lfEQId {
-          margin-left: auto;
-          margin-right: auto;
-          width: 900px;
-        }
-      }
+  <script async>
+    <!-- prettier-ignore -->
+    window._fs_ready=function(){var s,n,e=window[window._fs_namespace];try{s=e.getCurrentSessionURL(!0),n=e.getCurrentSession()}catch(s){console.warn("Unable to get FullStory current session data",s)}window.dispatchEvent(new CustomEvent("fullStoryReady",{detail:{instance:e,sessionId:n,sessionUrlAtTime:s}}))},window._fs_host="fullstory.com",window._fs_script="edge.fullstory.com/s/fs.js",window._fs_org="13AQBZ",window._fs_namespace="FS";
+    (function (m, n, e, t, l, o, g, y) { if (e in m) { if (m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'); } return; } g = m[e] = function (a, b, s) { g.q ? g.q.push([a, b, s]) : g._api(a, b, s); }; g.q = []; o = n.createElement(t); o.async = 1; o.crossOrigin = 'anonymous'; o.src = 'https://' + _fs_script; y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o, y); g.identify = function (i, v, s) { g(l, { uid: i }, s); if (v) g(l, v, s) }; g.setUserVars = function (v, s) { g(l, v, s) }; g.event = function (i, v, s) { g('event', { n: i, p: v }, s) }; g.anonymize = function () { g.identify(!!0) }; g.shutdown = function () { g("rec", !1) }; g.restart = function () { g("rec", !0) }; g.log = function (a, b) { g("log", [a, b]) }; g.consent = function (a) { g("consent", !arguments.length || a) }; g.identifyAccount = function (i, v) { o = 'account'; v = v || {}; v.acctId = i; g(o, v) }; g.clearUserCookie = function () { }; g.setVars = function (n, p) { g('setVars', [n, p]); }; g._w = {}; y = 'XMLHttpRequest'; g._w[y] = m[y]; y = 'fetch'; g._w[y] = m[y]; if (m[y]) m[y] = function () { return g._w[y].apply(this, arguments) }; g._v = "1.3.0"; })(window, document, window['_fs_namespace'], 'script', 'user');
+  </script>
 
-      @media (min-width: 1200px) {
-        .lfEQId {
-          margin-right: auto;
-          margin-left: auto;
-          width: 1200px;
-        }
-      }
-    </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W9CD68KC59"></script>
+  <script async>
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    ((window.dataLayer = window.dataLayer || []), gtag('js', new Date()), gtag('config', 'G-W9CD68KC59'));
+  </script>
+</head>
 
-    <script async>
-        <!-- prettier-ignore -->
-        window._fs_ready=function(){var s,n,e=window[window._fs_namespace];try{s=e.getCurrentSessionURL(!0),n=e.getCurrentSession()}catch(s){console.warn("Unable to get FullStory current session data",s)}window.dispatchEvent(new CustomEvent("fullStoryReady",{detail:{instance:e,sessionId:n,sessionUrlAtTime:s}}))},window._fs_host="fullstory.com",window._fs_script="edge.fullstory.com/s/fs.js",window._fs_org="13AQBZ",window._fs_namespace="FS";
-        (function (m, n, e, t, l, o, g, y) { if (e in m) { if (m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'); } return; } g = m[e] = function (a, b, s) { g.q ? g.q.push([a, b, s]) : g._api(a, b, s); }; g.q = []; o = n.createElement(t); o.async = 1; o.crossOrigin = 'anonymous'; o.src = 'https://' + _fs_script; y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o, y); g.identify = function (i, v, s) { g(l, { uid: i }, s); if (v) g(l, v, s) }; g.setUserVars = function (v, s) { g(l, v, s) }; g.event = function (i, v, s) { g('event', { n: i, p: v }, s) }; g.anonymize = function () { g.identify(!!0) }; g.shutdown = function () { g("rec", !1) }; g.restart = function () { g("rec", !0) }; g.log = function (a, b) { g("log", [a, b]) }; g.consent = function (a) { g("consent", !arguments.length || a) }; g.identifyAccount = function (i, v) { o = 'account'; v = v || {}; v.acctId = i; g(o, v) }; g.clearUserCookie = function () { }; g.setVars = function (n, p) { g('setVars', [n, p]); }; g._w = {}; y = 'XMLHttpRequest'; g._w[y] = m[y]; y = 'fetch'; g._w[y] = m[y]; if (m[y]) m[y] = function () { return g._w[y].apply(this, arguments) }; g._v = "1.3.0"; })(window, document, window['_fs_namespace'], 'script', 'user');
-    </script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W9CD68KC59"></script>
-    <script async>
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      ((window.dataLayer = window.dataLayer || []), gtag('js', new Date()), gtag('config', 'G-W9CD68KC59'));
-    </script>
-  </head>
-  <body class="fs-unmask">
-    <header class="gpHNAT" data-hidden="false" data-piece-id="header">
-      <div class="lfEQId">
-        <div class="dOFsBi">
-          <div class="logo"
-            ><a href="/" aria-label="Via Benefits homepage" class="logo-container"
-              ><img src="/static/cdn/es-assets/images/via-benefits-logo.png" alt="Via Benefits logo" /></a
-          ></div>
-        </div>
+<body class="fs-unmask">
+<header class="header-container" data-hidden="false" data-piece-id="header">
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">
+        <a href="/" aria-label="Via Benefits homepage" class="logo-link">
+          <img src="/static/cdn/es-assets/images/via-benefits-logo.png" alt="Via Benefits logo" />
+        </a>
       </div>
-    </header>
+    </div>
+  </div>
+</header>
 
-    <div class="container">
-      <div class="lfEQId eMpMeg" id="main-content" role="main">
-        <div class="top-border">&nbsp;</div>
-        <div class="fZxPXu">
-          <div class="large-badge-icon"
-            ><img src="/static/cdn/es-assets/images/full-color-icons/warning-shield.svg" class="gtZfrz dHjbSE"
-          /></div>
-          <div class="gsvxjx">
-            <h1 class="title">This Site Is Blocked</h1>
+<div class="content-wrapper">
+  <div id="error-app">
+    <div>
+      <div id="main-content" role="main" class="container main-content content-card">
+        <div class="content-top-border">&nbsp;</div>
+
+        <div class="content-body">
+          <div class="content-background">
+            <img
+              src="/static/cdn/es-assets/images/full-color-icons/warning-shield.svg"
+              class="content-image content-background-image"
+            />
+          </div>
+          <div class="content-text">
+            <h1 class="content-title">This Site Is Blocked</h1>
             <p>
               The site you're trying to reach is blocked due to security concerns with your web browser's history. You can clear your
               browser's
               <a href="https://support.google.com/accounts/answer/32050" target="_blank" rel="noopener noreferrer"
-                >cache and third-party cookies</a
+              >cache and third-party cookies</a
               >, then <a onClick="window.location.reload()" href="javascript:void(0)">try again</a>.
               <em>Note: browser extension add-ons can produce these security concerns.</em>
             </p>
-            <p
-              >If this issue continues, you can contact <a href="/about/contact">Via Benefits Support</a> at
-              <a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711).
+            <p>
+              If the issue continues or you need assistance, contact
+              <a href="https://help.viabenefits.com/contact/?utm_source=participant-403" target="_blank" rel="noopener noreferrer"
+              ><span style="white-space: nowrap">Via Benefits Support</span></a
+              >
+              at <span style="white-space: nowrap"><a href="tel:1-866-322-2824">1-866-322-2824</a> (TTY: 711)</span>
+              or
+              <a
+                href="https://vue.comm100.com/chatwindow.aspx?siteId=10002849&planId=23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65#"
+                target="_blank"
+                rel="noopener noreferrer"
+              >live chat</a
+              >.
             </p>
-            <p id="diagnostics" style="display: none; font-size: small"></p>
+            <p id="diagnostics" style="font-size: small; display: none"></p>
           </div>
-          <img src="/static/cdn/es-assets/images/full-color-icons/warning-shield.svg" alt="Warning shield" class="gtZfrz" />
+          <img
+            src="/static/cdn/es-assets/images/full-color-icons/warning-shield.svg"
+            alt="Warning shield"
+            class="content-image"
+          />
         </div>
       </div>
     </div>
-    <footer class="iIgDPG jlUbBR">
-      <div class="lfEQId copyright-container">
-        <div>
-          Copyright &copy;&nbsp;
-          <span id="currentYear"></span>
-          <script>
-            document.getElementById('currentYear').textContent = new Date().getFullYear();</script
-          >&nbsp;Extend Health, LLC All Rights Reserved
-        </div>
-      </div>
-    </footer>
-  </body>
+  </div>
+</div>
+
+<footer class="footer-container">
+  <div class="container footer-content">
+    <div class="footer-copyright">
+      Copyright Ⓒ&nbsp;
+      <span id="currentYear"></span>
+      <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();</script
+      >&nbsp;Extend Health, LLC All Rights Reserved
+    </div>
+  </div>
+</footer>
+</body>
 </html>
