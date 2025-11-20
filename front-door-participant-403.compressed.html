@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta name=bdaim:custom-error-page-id content=participant-403/waf>
+<meta name=bdaim:version content=v1.1.0>
+<meta charset=utf-8>
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name=viewport content="width=device-width">
+<meta name=bdaim:custom-error-gateway-tracking-ref content={{azure-ref}}>
+<title>Via Benefits - Security</title>
+<script>!function(){const t="Maintenance/Participant",e=t+"/403 Custom WAF Error Page Shown";window.contextualData={};const n=window.contextualData;window.addEventListener("fullStoryReady",(function(t){console.info("Adding FullStory telemetry...");const i=t.detail.instance;if(i.event(e,{statusCode:403,url:window.location.href,host:window.location.host,path:window.location.pathname,gatewayTrackingRef:"{{azure-ref}}"}),n.fullStorySessionUrl=t.detail.sessionUrlAtTime,n.fullStorySession=t.detail.sessionId,window.__bdaim.isAppInsightsLoaded&&appInsights&&appInsights.context){console.info("Adding AppInsight telemetry to FullStory..."),appInsights.addTelemetryInitializer((function(e){e.data.fullStorySessionUrl=t.detail.sessionUrlAtTime,e.data.fullStorySession=t.detail.sessionId})),i.setVars("page",{aiUserId:appInsights.context.user&&appInsights.context.user.id||void 0,aiSessionId:appInsights.context.getSessionId(),aiOperationId:appInsights.getTraceCtx().getTraceId(),traceId:appInsights.getTraceCtx().getTraceId()});const e=appInsights.context.user&&appInsights.context.user.authenticatedId||void 0;if(e){const t=e.split("/"),n={};t.length>1&&"participant"===t[0].trim().toLowerCase()?n.participantId=t[1].trim():t.length>1&&"employee"===t[0].trim().toLowerCase()?n.employeeId=t[1].trim():t.length>1&&"client"===t[0].trim().toLowerCase()&&(n.clientId=t[1].trim()),i.identify(e,n)}}})),window.addEventListener("appInsightsReady",(function(i){console.info("Adding AppInsights telemetry...");const s=i.detail.instance;s.addTelemetryInitializer((function(e){e.data||(e.data={}),e.tags["ai.cloud.role"]=t+"/CustomPage"})),s.trackEvent({name:e}),n.traceId=s.getTraceCtx().getTraceId()})),window.addEventListener("googleTagReady",(function(t){const e=t.detail.instance;window.__bdaim.isAppInsightsLoaded&&appInsights&&appInsights.context&&(console.info("Adding AppInsights telemetry to Google Tag..."),e("set",{traceId:appInsights.getTraceCtx().getTraceId()}),e("set",{aiOperationId:appInsights.getTraceCtx().getTraceId()}),e.context&&(e("set",{aiUserId:appInsights.context.user&&appInsights.context.user.id||void 0}),e("set",{aiSessionId:appInsights.context.getSessionId()})))})),window.addEventListener("comm100Ready",(function(t){const n=t.detail.instance;window.__bdaim.isAppInsightsLoaded&&appInsights&&appInsights.context&&(console.info("Adding AppInsights and FullStory telemetry to Comm100..."),n.set("livechat.customVariables",[{name:"scope",value:e},{name:"fullStorySessionUrl",value:t.detail.sessionUrlAtTime},{name:"fullStorySession",value:t.detail.sessionId},{name:"traceId",value:appInsights.getTraceCtx()&&appInsights.getTraceCtx().getTraceId()}]))}))}()</script>
+<script>const appInsightsConnectionString="#{appInsightsConnectionString}";window.__bdaim=window.__bdaim||{},window.__bdaim.isAppInsightsEnabled=!1,/^#{.*}$/gs.test(appInsightsConnectionString)?(console||{warn:function(){}}).warn("%cAppInsights\n%c Connection string key missing or not substituted [%s] ","font-weight: bold; font-size: 1.5em; line-height: 2em;","font-weight: normal",appInsightsConnectionString):(window.__bdaim.isAppInsightsEnabled=!0,function(e,n,t){var i=e.location,a="script",o="connectionString",s="ingestionendpoint",r="disableExceptionTracking",c="ai.device.",p="toLowerCase",l="crossOrigin",d="POST",u="appInsightsSDK",g=t.name||"appInsights";(t.name||e[u])&&(e[u]=g);var f=e[g]||function(u){var g=!1,f=!1,h={initialize:!0,queue:[],sv:"5",version:2,config:u};function m(e,n){var t={},a="Browser";return t[c+"id"]=a[p](),t[c+"type"]=a,t["ai.operation.name"]=i&&i.pathname||"_unknown_",t["ai.internal.sdkVersion"]="javascript:snippet_"+(h.sv||h.version),{time:function(){var e=new Date;function n(e){var n=""+e;return 1===n.length&&(n="0"+n),n}return e.getUTCFullYear()+"-"+n(1+e.getUTCMonth())+"-"+n(e.getUTCDate())+"T"+n(e.getUTCHours())+":"+n(e.getUTCMinutes())+":"+n(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+n,sampleRate:100,tags:t,data:{baseData:{ver:2}}}}var v=u.url||t.src;if(v){function w(n){var a,r,c,l,w,b,S,T,k,I,C;g=!0,h.queue=[],f||(f=!0,a=v,S=function(){var e={},n=u.connectionString;if(n)for(var t=n.split(";"),i=0;i<t.length;i++){var a=t[i].split("=");2===a.length&&(e[a[0][p]()]=a[1])}if(!e[s]){var o=e.endpointsuffix,r=o?e.location:null;e[s]="https://"+(r?r+".":"")+"dc."+(o||"services.visualstudio.com")}return e}(),T=S[o]||u[o]||"",I=(k=S[s])?k+"/v2/track":u.endpointUrl,(C=[]).push((r="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",c=a,l=I,(b=(w=m(T,"Exception")).data).baseType="ExceptionData",b.baseData.exceptions=[{typeName:"SDKLoadFailed",message:r.replace(/\./g,"-"),hasFullStack:!1,stack:r+"\nSnippet failed to load ["+c+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(i&&i.pathname||"_unknown_")+"\nEndpoint: "+l,parsedStack:[]}],w)),C.push(function(e,n,t,i){var a=m(T,"Message"),o=a.data;o.baseType="MessageData";var s=o.baseData;return s.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+t+")").replace(/\"/g,"")+'"',s.properties={endpoint:i},a}(0,0,a,I)),function(n,i){if(JSON){var a=e.fetch;if(a&&!t.useXhr)a(i,{method:d,body:JSON.stringify(n),mode:"cors"});else if(XMLHttpRequest){var o=new XMLHttpRequest;o.open(d,i),o.setRequestHeader("Content-type","application/json"),o.send(JSON.stringify(n))}}}(C,I))}function b(e,n){f||setTimeout((function(){!n&&h.core||w()}),500)}var S=function(){var e=n.createElement(a);e.src=v;var i=t[l];return!i&&""!==i||"undefined"==e[l]||(e[l]=i),e.onload=b,e.onerror=w,e.onreadystatechange=function(n,t){"loaded"!==e.readyState&&"complete"!==e.readyState||b(0,t)},e}();t.ld<0?n.getElementsByTagName("head")[0].appendChild(S):setTimeout((function(){n.getElementsByTagName(a)[0].parentNode.appendChild(S)}),t.ld||0)}try{h.cookie=n.cookie}catch(E){}function T(e){for(;e.length;)!function(e){h[e]=function(){var n=arguments;g||h.queue.push((function(){h[e].apply(h,n)}))}}(e.pop())}var k="track",I="TrackPage",C="TrackEvent";T([k+"Event",k+"PageView",k+"Exception",k+"Trace",k+"DependencyData",k+"Metric",k+"PageViewPerformance","start"+I,"stop"+I,"start"+C,"stop"+C,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),h.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var y=(u.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==u[r]&&!0!==y[r]){var D="onerror";T(["_"+D]);var A=e[D];e[D]=function(e,n,t,i,a){var o=A&&A(e,n,t,i,a);return!0!==o&&h["_"+D]({message:e,url:n,lineNumber:t,columnNumber:i,error:a}),o},u.autoExceptionInstrumented=!0}return h}(t.cfg);function h(){t.onInit&&t.onInit(f)}(e[g]=f).queue&&0===f.queue.length?(f.queue.push(h),f.trackPageView({})):h()}(window,document,{src:"https://js.monitor.azure.com/scripts/b/ai.2.min.js",ld:-1,crossOrigin:"anonymous",onInit:function(){console.debug("App Insights SDK initialized"),window.__bdaim.isAppInsightsLoaded=!0,window.dispatchEvent(new CustomEvent("appInsightsReady",{detail:{instance:appInsights}}))},cfg:{connectionString:appInsightsConnectionString,distributedTracingMode:2,disableFetchTracking:!1,enableCorsCorrelation:!0,enableRequestHeaderTracking:!0,enableResponseHeaderTracking:!0,autoTrackPageVisitTime:!0,enableAutoRouteTracking:!0,enableAjaxErrorStatusText:!0,correlationHeaderDomains:[window.location.host],cookieDomain:window.location.hostname.split(".").slice(-2).join(".")}}))</script>
+<link rel=stylesheet href=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/source-sans-pro.css>
+<link rel=stylesheet href=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/icons.css>
+<link rel="shortcut icon" href=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/favicon.ico>
+<link rel=preload href=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png as=image>
+<link rel=preload href=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/backgrounds/3.jpg as=image>
+<link rel=preconnect href=https://viabenefits.com/ >
+<link rel=preconnect href=https://help.viabenefits.com/ >
+<link rel=preconnect href=https://help.viabenefits.com/contact/ >
+<style>body{background:url(https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/backgrounds/3.jpg);background-attachment:fixed;background-color:#d9e7dc;background-position:center bottom;background-repeat:no-repeat;background-size:contain;position:relative;color:#444;box-sizing:border-box;font-family:'Source Sans Pro','Segoe UI',Segoe,Calibri,Tahoma,sans-serif;line-height:1.428;margin:0;min-height:100%;min-width:360px;padding:20px 0;padding-top:110px}@media (min-width:900px){body{padding:54px 0;padding-top:140px;padding-bottom:25px}}@media (max-width:480px){body{background:0 0;padding-top:70px}}header{display:block}.gpHNAT{position:fixed;background-color:#fff;box-sizing:border-box;right:0;left:0;z-index:1005;bottom:initial;top:0;border-bottom:4px solid #00a0d2}.dOFsBi{-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;margin:0 5px}@media (min-width:768px){.dOFsBi{height:85px;margin:0 10px}}.logo{-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:100%;min-height:74px;-webkit-box-pack:space-around;-webkit-justify-content:space-around;-ms-flex-pack:space-around;justify-content:space-around;padding:2px 0;margin:auto}@media (min-width:480px){.logo{margin:unset}}@media (min-width:768px){.logo{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:auto;min-height:auto;-webkit-box-pack:normal;-webkit-justify-content:normal;-ms-flex-pack:normal;justify-content:normal;margin:unset}}@media (min-width:480px){.kiVfhQ{margin:unset;min-width:120px}}.kiVfhQ{-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;height:30px;min-width:110px}.kiVfhQ img{max-height:100%;max-width:100%}.fZxPXu{padding:15px 30px 30px;display:flex;position:relative;flex-direction:column-reverse;gap:20px}@media (min-width:768px){.fZxPXu{flex-direction:row;padding-top:55px}}.ficWV{display:block;-webkit-box-pack:center;justify-content:center}.bPdQbX{color:inherit;font-size:33px;font-weight:550;line-height:1.1;margin:0;padding-bottom:15px}@media (min-width:480px){.bPdQbX{font-size:37px}}@media (min-width:768px){.bPdQbX{padding-bottom:20px}}.gsvxjx{margin:0}.gsvxjx p{font-size:18px;margin:0;padding-right:15px;padding-bottom:20px;text-wrap:pretty}@media (min-width:480px){.gsvxjx p{padding-right:unset}}@media (min-width:768px){.gsvxjx p{width:80%;padding-bottom:30px}}.kWdWjz{position:absolute;left:0;top:0;width:100%;height:100%;z-index:-1;background:#fff;overflow:hidden}.eMpMeg{box-shadow:rgba(0,0,0,.3) 0 2px 5px 2px;margin-bottom:25px}@media (max-width:480px){.eMpMeg{box-shadow:none;margin-bottom:unset}}#main-content{background:0 0}.top-border{background-color:#0073b6;height:20px}@media (max-width:480px){.top-border{display:none}}.dHjbSE{display:none;position:absolute;right:113px;top:68px;transform:scale(1.7,1.7) rotate(13deg);opacity:.1;width:71%;height:auto}@media (min-width:768px){.dHjbSE{display:unset}}.gtZfrz{width:40%;margin:auto}@media (min-width:768px){.gtZfrz{width:40%}}i.copy-icon{display:inline-block;width:13px;height:13px;font-size:13px;font-weight:400;line-height:13px;cursor:copy;transition:all;caret-color:rgb(249,236,217);color-scheme:dark;font-synthesis:weight style small-caps;webkit-tap-highlight-color:rgba(0,0,0,0.18)}.diagnostic-container{display:grid;grid-template-columns:minmax(20px,auto) 1fr;gap:10px;list-style-type:none;padding:15px;border:1px solid #add8e6;background-color:#f5f5f5;border-radius:5px;font-size:small}.diagnostic-label{font-weight:700}.diagnostic-value{word-break:break-all;border-bottom:1px solid #d3d3d3;padding-bottom:3px;text-align:left}@media (max-width:480px){.diagnostic-container{grid-template-columns:unset}}.iIgDPG{background:0 0;padding-bottom:25px}.iIgDPG>.sc-dwVMhp:not(:last-child){margin-bottom:25px}.hGVbps{background-color:#fff;border-top:2px solid #c110a0;box-shadow:0 2px 5px 2px rgba(0,0,0,.3);color:#000;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;font-size:85%;font-weight:400;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;padding:10px}.lfEQId{box-sizing:border-box;min-width:360px}.hCaFHM{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;list-style-type:none;margin:0;padding:0}.RMAsu{margin-bottom:5px;padding-right:5px;text-align:left}.RMAsu a{color:inherit;-webkit-text-decoration:none;text-decoration:none;padding-left:4px}.RMAsu button{background:0 0;border:0;color:inherit;cursor:pointer;font:inherit;padding:0;text-align:inherit;margin:0;padding-left:4px}.ivsyaY{-webkit-align-self:baseline;-ms-flex-item-align:baseline;align-self:baseline;text-align:right}@media (min-width:768px){.hGVbps{padding:20px}}@media (max-width:480px){.hGVbps{box-shadow:none;margin-bottom:unset}.ivsyaY{padding-left:4px}}@media (min-width:900px){.lfEQId{margin-left:auto;margin-right:auto;width:900px}.hCaFHM{-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row}.RMAsu:not(:last-child){border-right:1px solid #919191}.RMAsu{margin-bottom:initial}.ivsyaY{text-align:initial}}@media (min-width:1200px){.lfEQId{margin-right:auto;margin-left:auto;width:1200px}}</style>
+<script async>window._fs_ready=function(){let n,e;console.info("FullStory SDK initialized");let t=window[window._fs_namespace];try{n=t.getCurrentSessionURL(!0),e=t.getCurrentSession()}catch(n){console.warn("Unable to get FullStory current session data",n)}const o=new CustomEvent("fullStoryReady",{detail:{instance:t,sessionId:e,sessionUrlAtTime:n}});!window.__bdaim||!window.__bdaim.isAppInsightsLoaded&&!1!==window.__bdaim.isAppInsightsEnabled?window.addEventListener("appInsightsReady",(function(){window.dispatchEvent(o)})):window.dispatchEvent(o)},window._fs_host="fullstory.com",window._fs_script="edge.fullstory.com/s/fs.js",window._fs_org="13AQBZ",window._fs_namespace="FS",function(n,e,t,o,s,i,c,a){t in n?n.console&&n.console.log&&n.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'):((c=n[t]=function(n,e,t){c.q?c.q.push([n,e,t]):c._api(n,e,t)}).q=[],(i=e.createElement(o)).async=1,i.crossOrigin="anonymous",i.src="https://"+_fs_script,(a=e.getElementsByTagName(o)[0]).parentNode.insertBefore(i,a),c.identify=function(n,e,t){c(s,{uid:n},t),e&&c(s,e,t)},c.setUserVars=function(n,e){c(s,n,e)},c.event=function(n,e,t){c("event",{n:n,p:e},t)},c.anonymize=function(){c.identify(!1)},c.shutdown=function(){c("rec",!1)},c.restart=function(){c("rec",!0)},c.log=function(n,e){c("log",[n,e])},c.consent=function(n){c("consent",!arguments.length||n)},c.identifyAccount=function(n,e){i="account",(e=e||{}).acctId=n,c(i,e)},c.clearUserCookie=function(){},c.setVars=function(n,e){c("setVars",[n,e])},c._w={},a="XMLHttpRequest",c._w[a]=n[a],a="fetch",c._w[a]=n[a],n[a]&&(n[a]=function(){return c._w[a].apply(this,arguments)}),c._v="1.3.0")}(window,document,window._fs_namespace,"script","user")</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W9CD68KC59"></script>
+<script async>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-W9CD68KC59");const googleTagReadyEvent=new CustomEvent("googleTagReady",{detail:{instance:gtag}});window.__bdaim&&(window.__bdaim.isAppInsightsLoaded||!1===window.__bdaim.isAppInsightsEnabled)?window.dispatchEvent(googleTagReadyEvent):window.addEventListener("appInsightsReady",(function(){window.dispatchEvent(googleTagReadyEvent)}))</script>
+</head>
+<body class=fs-unmask>
+<header class="sc-gILORG gpHNAT sc-eVBRet imebRT" data-hidden=false data-piece-id=header>
+<div class="sc-dwVMhp lfEQId">
+<div class=dOFsBi>
+<div class=logo>
+<a href=/ aria-label="Via Benefits homepage" class=kiVfhQ>
+<img src=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/via-benefits-logo.png alt="Via Benefits logo">
+</a>
+</div>
+</div>
+</div>
+</header>
+<div class=ficWV>
+<div id=error-app>
+<div>
+<div id=main-content role=main class="sc-dwVMhp lfEQId sc-hbjaKc eMpMeg">
+<div class=top-border>&nbsp;</div>
+<div class=fZxPXu>
+<div class=kWdWjz>
+<img src=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg class="gtZfrz dHjbSE">
+</div>
+<div class=gsvxjx>
+<h1 class=bPdQbX>This Site Is Blocked</h1>
+<p>
+The site you're trying to reach is blocked due to security concerns with your web browser's history. You can clear your browser's
+<a href=https://support.google.com/accounts/answer/32050 target=_blank rel="noopener noreferrer">cache and third-party cookies</a>, then <a onClick=window.location.reload() href=javascript:void(0)>try again</a>.
+<em>Note: browser extension add-ons can produce these security concerns.</em>
+<br><span id=critical-diagnostic style=color:#d0d4d8;font-size:.7em;word-break:break-word;margin-top:5px>{{azure-ref}}</span>
+</p>
+<p>
+If the issue continues or you need assistance, contact
+<a href="https://help.viabenefits.com/contact/?utm_source=participant-403_waf" target=_blank rel="noopener noreferrer"><span style=white-space:nowrap>Via Benefits Support</span></a>
+at <span style=white-space:nowrap><a href=tel:1-866-322-2824>1-866-322-2824</a> (TTY: 711)</span>
+or
+<a href="https://vue.comm100.com/chatwindow.aspx?siteId=10002849&planId=23546c48-d6f1-4fe7-ab8c-ec3cfadf6f65#" target=_blank rel="noopener noreferrer">live chat</a>.
+</p>
+<div id=diagnostics style=font-size:small;display:none>
+<details>
+<summary>Additional Diagnostic Details</summary>
+Please provide these details when contacting support to resolve the issue.
+<div style=margin-top:10px>
+<em>
+<a href=javascript:void(0) onClick=copyToClipboard(getDiagnosticsAsText()) style=cursor:copy>Click here</a>
+to copy all details to the clipboard
+<i class="bds-icon bds-copy copy-icon" aria-hidden=true title="Copy to clipboard" onClick=copyToClipboard(getDiagnosticsAsText())></i>
+</em>
+<ul class=diagnostic-container id=diagnostics-list>
+<li class=diagnostic-label>Recording Link:</li>
+<li id=fullStoryLink class=diagnostic-value></li>
+<li class=diagnostic-label>URL:</li>
+<li id=url class=diagnostic-value></li>
+<li class=diagnostic-label>Username:</li>
+<li id=username class=diagnostic-value></li>
+<li class=diagnostic-label>Participant ID:</li>
+<li id=participantId class=diagnostic-value></li>
+<li class=diagnostic-label>Is Agent:</li>
+<li id=isAgent class=diagnostic-value></li>
+<li class=diagnostic-label>Campaign:</li>
+<li id=campaignKeyword class=diagnostic-value></li>
+<li class=diagnostic-label>Trace/Operation ID:</li>
+<li id=appInsightsTraceId class=diagnostic-value></li>
+<li class=diagnostic-label>Session ID:</li>
+<li id=appInsightsSessionId class=diagnostic-value></li>
+<li class=diagnostic-label>Session Authentication ID:</li>
+<li id=appInsightsAuthenticationId class=diagnostic-value></li>
+<li class=diagnostic-label>Session User ID:</li>
+<li id=appInsightsUserId class=diagnostic-value></li>
+<li class=diagnostic-label>Gateway Tracking ID:</li>
+<li id=gatewayTrackingReference class=diagnostic-value></li>
+<li class=diagnostic-label>Timestamp:</li>
+<li id=timestamp class=diagnostic-value></li>
+<li class=diagnostic-label>Browser:</li>
+<li id=browser class="diagnostic-value no-border"></li>
+</ul>
+</div>
+</details>
+</div>
+<script>function getEnvironmentFromHost(){const t=window.location.hostname.toLowerCase().split(".");return 3===t.length&&"staging"===t[0].toLowerCase()?"stage":4===t.length?t[1]:"prod"}function getNormalizedEnvironmentFromHost(){const t=getEnvironmentFromHost();return"prod"===t?"":t}function getCookie(t){return document.cookie.split("; ").find((e=>e.startsWith(`$${t}=`)))?.split("=")[1]??null}function copyToClipboard(t){navigator.permissions?navigator.permissions.query({name:"clipboard-write"}).then((({state:e})=>"granted"!==e.toLowerCase()?(alert("Clipboard access requires user permission"),Promise.reject(new Error("Permission not granted"))):navigator.clipboard.writeText(t))).catch((t=>{alert("Must copy manually"),console.error(t)})):alert("Unable to copy. Must copy manually.")}function getContext(t){const e=sessionStorage.getItem(t);return e?JSON.parse(e):null}let diagnostics={};function updateDiagnostics({fullStoryLink:t,fullStorySessionId:e}={}){const i=getContext("userContext");let n=sessionStorage.getItem("userName");"undefined"!==n&&'""'!==n||(n=void 0),n=n?.replace(/"/g,"");const o=window.__bdaim.isAppInsightsLoaded&&appInsights&&appInsights.context;let s=o&&appInsights.context.user.authenticatedId||void 0,a=i&&i.availability&&i.availability.participantId||void 0;if(s&&!a)try{const t=s.split("/");t.length>1&&"participant"===t[0].trim().toLowerCase()&&(a=t[1].trim())}catch(t){console.warn("Error parsing AppInsights AuthenticationId",t)}diagnostics={...diagnostics,fullStoryLink:t||diagnostics.fullStoryLink||getCookie("fs_uid"),fullStorySessionId:e||diagnostics.fullStorySessionId,url:window.location.href,username:n,participantId:a,isAgent:i&&i.availability&&i.availability.isAgent||void 0,campaignKeyword:getCookie(`currentCampaign$${getNormalizedEnvironmentFromHost()?"_"+getNormalizedEnvironmentFromHost():void 0}`),appInsightsTraceId:o?appInsights.getTraceCtx().getTraceId():void 0,appInsightsSessionId:o?appInsights.context.getSessionId():getCookie("ai_session"),appInsightsUserId:o?appInsights.context.user.id:getCookie("ai_user"),appInsightsAuthenticationId:s,timestamp:(new Date).toLocaleString("en-US",{timeZoneName:"short"}),sourceHost:window.location.hostname,browser:navigator.userAgent,gatewayTrackingReference:"{{azure-ref}}"},Object.keys(diagnostics).forEach((t=>{diagnostics[t]||(diagnostics[t]="")}))}function getDiagnosticsAsText(){return Object.entries(diagnostics).filter((([t,e])=>e)).map((([t,e])=>`$${t}: $${e}`)).join("\n")}function populateDiagnostics(){const t=document.querySelectorAll("#diagnostics-list li:nth-child(2n)"),e={...diagnostics};e.fullStoryLink&&(e.fullStoryLink=`$${e.fullStorySessionId}|$${e.fullStoryLink}`);for(const i of t){const t=i.id,n=e[t];if(t.endsWith("Link")){const[t,e]=n.split("|");i.innerHTML=`<a href="$${e}" target="_blank" rel="noopener noreferrer">$${t}</a>`}else i.textContent=n;const o=n?"block":"none";i.style.display=o,i.previousElementSibling.style.display=o}document.getElementById("diagnostics").style.display="block"}window.addEventListener("fullStoryReady",(function(t){const{sessionUrlAtTime:e,sessionId:i}=t.detail;updateDiagnostics({fullStoryLink:e,fullStorySessionId:i}),populateDiagnostics()}));try{updateDiagnostics(),populateDiagnostics()}catch(t){console.error("Error populating diagnostics:",t)}</script>
+</div>
+<img src=https://bdaimpna26fetoolcdnendpoint.azureedge.net/es-assets/images/full-color-icons/warning-shield.svg alt="Warning shield" class=gtZfrz>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="sc-hbyLVd iIgDPG sc-cgFpzT jlUbBR">
+<div class="sc-dwVMhp sc-oclUV lfEQId hGVbps">
+<ul class="sc-cQwIYT hCaFHM">
+<li class="sc-knuRna RMAsu">
+<a href=https://viabenefits.com/about/privacy-policy/ target=_blank rel="noopener noreferrer">Privacy Policy</a>
+</li>
+<li class="sc-knuRna RMAsu">
+<a href=https://viabenefits.com/about/licensing-legal/ target=_blank rel="noopener noreferrer">Licensing &amp; Legal</a>
+</li>
+<li class="sc-knuRna RMAsu">
+<a href=https://viabenefits.com/about/ target=_blank rel="noopener noreferrer">About Us</a>
+</li>
+<li class="sc-knuRna RMAsu">
+<a href=https://help.viabenefits.com/contact/ target=_blank rel="noopener noreferrer">Contact Us</a>
+</li>
+</ul>
+<div class="sc-hLaujc ivsyaY">
+Copyright Ⓒ&nbsp;
+<span id=currentYear></span>
+<script>document.getElementById("currentYear").textContent=(new Date).getFullYear()</script>&nbsp;Extend Health, LLC All Rights Reserved
+</div>
+</div>
+</footer>
+</body>
+</html>
