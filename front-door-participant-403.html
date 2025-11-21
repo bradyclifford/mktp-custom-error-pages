@@ -17,6 +17,8 @@
     <!-- When generating the minified HTML, ensure all ${ are escaped with $${ or the 'templatefile' expression in terraform will fail. Do not escape: ${appInsightsConnectionString} -->
     <!-- Test with URL https://app.viabenefits.com/?q=%3Cscript%3Ealert(%27XSS%27)%3C/script%3E -->
 
+    <!-- Terraform's templatefile treats ${...} as interpolation. Escaping JavaScript template literals in the HTML by replacing ${ with $${ -->
+
     <!-- Duplicate page exists in Participant Guidance -->
 
     <!-- Track Data -->
