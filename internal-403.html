@@ -105,7 +105,7 @@
               aiOperationId: appInsights.getTraceCtx().getTraceId()
             });
 
-            if (instance.context) {
+            if (appInsights.context) {
               instance('set', {
                 aiUserId: (appInsights.context.user && appInsights.context.user.id) || undefined
               });
