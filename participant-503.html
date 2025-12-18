@@ -49,7 +49,7 @@
 
             appInsights.addTelemetryInitializer(function (envelope) {
               envelope.data.fullStorySessionUrl = e.detail.sessionUrlAtTime;
-              envelope.data.fullStorySession = e.detail.sessionId;
+              envelope.data.fullStorySessionId = e.detail.sessionId;
             });
 
             instance.setVars('page', {
